@@ -1,15 +1,14 @@
 package co.simplon.dao;
 
-import java.util.Set;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import co.simplon.model.Profil;
 import co.simplon.model.Utilisateur;
+import java.lang.String;
+import java.util.List;
 
 @Repository
-public interface EmployeDao extends JpaRepository<Utilisateur, Long>{
-
-	Set<Utilisateur> findByProfil(Profil profil);
+public interface UtilisateurDao extends JpaRepository<Utilisateur, Long>{
+	
+	Utilisateur findByLogin(String login);
 }

@@ -1,8 +1,9 @@
 package co.simplon.service;
 
 import java.util.List;
+import java.util.Set;
 
-import co.simplon.model.Employe;
+import co.simplon.model.Utilisateur;
 
 /**
  * 
@@ -13,10 +14,10 @@ import co.simplon.model.Employe;
 
 public interface EmployeService {
 
-	List<Employe> getAllEmploye ();
-	Employe addEmploye (Employe employe);
-	Employe getEmploye (Long id);
-	Employe updateEmploye (Employe employe);
-	void deleteEmploye (Employe employe);
+	Set<Utilisateur> getAllEmploye ();
+	Utilisateur addEmploye (Utilisateur employe);
+	Utilisateur getEmploye (Long id);
+	Utilisateur updateEmploye (Utilisateur employe);
+	void deleteEmploye (Utilisateur employe);
 	
 }

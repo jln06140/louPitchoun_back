@@ -1,15 +1,16 @@
 package co.simplon.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import co.simplon.enums.ProfilEnum;
 import co.simplon.model.Profil;
-import co.simplon.model.Utilisateur;
 
 @Repository
-public interface EmployeDao extends JpaRepository<Utilisateur, Long>{
+public interface ProfilDao extends JpaRepository<Profil, Long>{
 
-	Set<Utilisateur> findByProfil(Profil profil);
+	List<Profil> findByLibelle(ProfilEnum libelle);
 }
+

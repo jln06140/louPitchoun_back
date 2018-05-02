@@ -1,43 +1,53 @@
 package co.simplon.service.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.simplon.dao.ParentDao;
-import co.simplon.model.Employe;
-import co.simplon.model.Parent;
+import co.simplon.enums.ProfilEnum;
+import co.simplon.model.Profil;
+import co.simplon.model.Utilisateur;
 import co.simplon.service.ParentService;
+import co.simplon.service.ProfilService;
+
+/*
+ * Service lié a un parent qui est un uitilsateur
+ */
 
 @Service
 public class ParentServiceImpl implements ParentService{
 
 	@Autowired
 	private ParentDao parentDao;
+	
+	@Autowired 
+	private ProfilService profilService;
 
 	@Override
-	public List<Parent> getAllParent() {
-		return this.parentDao.findAll();
+	public Set<Utilisateur> getAllParent() {
+		Profil profil = this.profilService.getProfilByLibelle(ProfilEnum.PARENT);
+		return this.parentDao.findByProfil(profil);
 	}
 
 	@Override
-	public Parent addParent(Parent parent) {
+	public Utilisateur addParent(Utilisateur parent) {
 		return this.parentDao.save(parent);
 	}
 
 	@Override
-	public Parent getParent(Long id) {
+	public Utilisateur getParent(Long id) {
 		return this.parentDao.findOne(id);
 	}
 
 	@Override
-	public Parent updateParent(Parent parent) {
+	public Utilisateur updateParent(Utilisateur parent) {
 		return this.parentDao.save(parent);
 	}
 
 	@Override
-	public void deleteParent(Parent parent) {
+	public void deleteParent(Utilisateur parent) {
 		this.parentDao.delete(parent);
 		
 	}

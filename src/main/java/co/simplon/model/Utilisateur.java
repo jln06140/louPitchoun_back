@@ -1,63 +1,99 @@
 package co.simplon.model;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
-@Table(name="utilisateur")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Utilisateur {
-	
+public class Utilisateur {
 	
 	@Id
-	@GeneratedValue (strategy = GenerationType.AUTO)
-	protected Long id;
+	@GeneratedValue ( strategy = GenerationType.AUTO)
+	private long id;
 	
-	protected String nom;
-	protected String prenom;
+	@Column( unique = true)
+	private String login;
 	
-	@Column(name = "datedenaissance")
-	protected Date dateDeNaissance;
+	@Column( name = "mot_de_passe")
+	private String motDePasse;
+	private boolean actif;
+	
+	@CreatedDate
+	private Date createDate;
 	
 	@ManyToOne
-	@JoinColumn(name="idLogin")
-	protected Login login;
+	@JoinColumn (name = "id_profil")
+	private Profil profil;
+		
+	@ManyToOne
+	@JoinColumn ( name = "id_info")
+	private CommonInfo commonInfo;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "parent_enfant",
+				joinColumns = {@JoinColumn(name = "parent_id")},
+				inverseJoinColumns= {@JoinColumn(name = "enfant_id")})
+	private Set<Enfant> enfants;
 	
 	
-	public Long getId() {
+	
+	public long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	public String getNom() {
-		return nom;
+	public String getLogin() {
+		return login;
 	}
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setLogin(String login) {
+		this.login = login;
 	}
-	public String getPrenom() {
-		return prenom;
+	public String getMotDePasse() {
+		return motDePasse;
 	}
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
 	}
-	public Date getDateDeNaissance() {
-		return dateDeNaissance;
+	public boolean isActif() {
+		return actif;
 	}
-	public void setDateDeNaissance(Date dateDeNaissance) {
-		this.dateDeNaissance = dateDeNaissance;
+	public void setActif(boolean actif) {
+		this.actif = actif;
 	}
+	public Profil getProfil() {
+		return profil;
+	}
+	public void setProfil(Profil profil) {
+		this.profil = profil;
+	}
+	public CommonInfo getCommonInfo() {
+		return commonInfo;
+	}
+	public void setCommonInfo(CommonInfo commonInfo) {
+		this.commonInfo = commonInfo;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
+	
+	
 	
 	
 

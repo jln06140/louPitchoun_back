@@ -1,9 +1,9 @@
 package co.simplon.service;
 
-import java.util.List;
+import java.util.Set;
 
-import co.simplon.model.Employe;
-import co.simplon.model.Parent;
+import co.simplon.model.Utilisateur;
+
 
 /**
  * 
@@ -11,13 +11,11 @@ import co.simplon.model.Parent;
  *	ajout, lecture, suppression, mise a jour
  *	d'un parent
  */
-
 public interface ParentService {
-
-	List<Parent> getAllParent ();
-	Parent addParent (Parent parent);
-	Parent getParent (Long id);
-	Parent updateParent (Parent parent);
-	void deleteParent (Parent parent);
-	
+	Set<Utilisateur> getAllParent();
+	Utilisateur addParent (Utilisateur parent);
+	Utilisateur getParent( Long id);
+	Utilisateur updateParent( Utilisateur parent);
+	void deleteParent (Utilisateur parent);
 }
+
