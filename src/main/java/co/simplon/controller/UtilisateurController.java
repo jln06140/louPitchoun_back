@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,8 +42,8 @@ public class UtilisateurController {
 	@Autowired
 	private EmployeService employeService;
 	
-	@Autowired 
-	private ObjectMapper objectMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	
 	/*
@@ -51,9 +52,9 @@ public class UtilisateurController {
 	 * 
 	 */
 
-	private ParentDto getPersonDTOFromJson(final String jsoParentDto) throws IOException {
+	/*private ParentDto getPersonDTOFromJson(final String jsoParentDto) throws IOException {
         return objectMapper.setDateFormat(simpleDateFormat).readValue(jsonPersonDTO, PersonDTO.class);
-    }
+    }*/
 	
 	@GetMapping("/utilisateur")
 	@ApiOperation("Lecture d'un utilisateur")
@@ -62,10 +63,10 @@ public class UtilisateurController {
 	}
 	
 	
-	@GetMapping("/parent")
+	/*@GetMapping("/parent")
 	Set<ParentDto> getAllParents(){
 		return this.parentService.getAllParent();
-	}
+	}*/
 	
 	
 	/*
@@ -92,7 +93,13 @@ public class UtilisateurController {
 	Utilisateur addUtilisateur(@Valid @RequestBody Utilisateur utilisateur) {
 		return this.utilisateurService.createUtilisateur(utilisateur);
 	}
-	
+
+
+	/*@PostMapping("/utilisateur/parent")
+	Utilisateur addUtilisateurParent(@Valid @RequestBody ParentDto parentDto) {
+		return this.utilisateurService.createUtilisateur(modelMapper.map(parentDto, ParentDto.class);
+	}*/
+
 	/**
 	 * @param id utilisateur
 	 * @param utilisateur

@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import co.simplon.enums.ProfilEnum;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
@@ -91,6 +92,9 @@ public class Utilisateur {
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+	public boolean isParent(){
+		return this.profil.getLibelle().equals(ProfilEnum.PARENT.toString());
 	}
 	
 	

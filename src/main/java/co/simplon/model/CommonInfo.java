@@ -1,11 +1,6 @@
 package co.simplon.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -13,16 +8,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Table (name = "common_info")
-@PrimaryKeyJoinColumn (name = "id")
-@Inheritance ( strategy = InheritanceType.JOINED )
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "typeName")
-@JsonSubTypes({
-        @Type(value = ParentInfo.class),
-        @Type(value = EmployeInfo.class)
-})
+@MappedSuperclass
+
+http://www.thejavageek.com/2014/05/14/jpa-single-table-inheritance-example/
+
 public class CommonInfo extends info {
 	
 	private String adresse;

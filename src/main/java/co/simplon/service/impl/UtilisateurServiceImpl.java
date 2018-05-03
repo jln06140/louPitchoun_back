@@ -2,6 +2,7 @@ package co.simplon.service.impl;
 
 import java.util.List;
 
+import co.simplon.model.ParentInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public Utilisateur createUtilisateur(Utilisateur utilisateur) {
+		if (utilisateur.isParent()){
+			utilisateur.setCommonInfo((ParentInfo)utilisateur.getCommonInfo());
+		}
 		return this.utilisateurDao.save(utilisateur);
 	}
 
