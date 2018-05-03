@@ -7,11 +7,23 @@ import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 @Entity
 @Table (name = "common_info")
 @PrimaryKeyJoinColumn (name = "id")
 @Inheritance ( strategy = InheritanceType.JOINED )
-public abstract class CommonInfo extends info {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "typeName")
+@JsonSubTypes({
+        @Type(value = ParentInfo.class),
+        @Type(value = EmployeInfo.class)
+})
+public class CommonInfo extends info {
 	
 	private String adresse;
 	private String ville;

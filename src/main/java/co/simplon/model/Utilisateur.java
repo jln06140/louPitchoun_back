@@ -3,6 +3,7 @@ package co.simplon.model;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -37,7 +38,7 @@ public class Utilisateur {
 	@JoinColumn (name = "id_profil")
 	private Profil profil;
 		
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn ( name = "id_info")
 	private CommonInfo commonInfo;
 	

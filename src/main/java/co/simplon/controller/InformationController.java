@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.model.CommonInfo;
+import co.simplon.model.ParentInfo;
 import co.simplon.service.InformationService;
 
 @RestController
@@ -31,6 +32,13 @@ public class InformationController {
 	@PostMapping("/information")
 	CommonInfo addInfo(@Valid @RequestBody CommonInfo commonInfo) {
 		return this.informationService.addInfo(commonInfo);
+		
+	}
+	
+	@PostMapping("/information/parent")
+	CommonInfo addInfoParent(@Valid @RequestBody ParentInfo parentInfo) {
+		return this.informationService.addInfo(parentInfo);
+		
 	}
 
 }

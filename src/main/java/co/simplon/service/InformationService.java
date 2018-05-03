@@ -3,6 +3,7 @@ package co.simplon.service;
 import java.util.List;
 
 import co.simplon.model.CommonInfo;
+import co.simplon.model.ParentInfo;
 
 public interface InformationService {
 	
@@ -10,5 +11,7 @@ public interface InformationService {
 	CommonInfo getInfo();
 	CommonInfo addInfo(CommonInfo commonInfo);
 	CommonInfo updateInfo();
+	
+	ParentInfo addParentInfo(ParentInfo parentInfo);
 
 }

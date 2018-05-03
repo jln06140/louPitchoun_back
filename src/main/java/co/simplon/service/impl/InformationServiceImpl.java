@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.simplon.dao.CommonInfoDao;
+import co.simplon.dao.ParentInfoDao;
 import co.simplon.model.CommonInfo;
+import co.simplon.model.ParentInfo;
 import co.simplon.service.InformationService;
 
 @Service
@@ -14,6 +16,9 @@ public class InformationServiceImpl implements InformationService {
 
 	@Autowired
 	private CommonInfoDao commonInfoDao;
+	
+	@Autowired 
+	private ParentInfoDao parentInfoDao;
 	
 	@Override
 	public CommonInfo getInfo() {
@@ -35,6 +40,11 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	public List<CommonInfo> getAllInfos() {
 		return this.commonInfoDao.findAll();
+	}
+
+	@Override
+	public ParentInfo addParentInfo(ParentInfo parentInfo) {
+		return this.parentInfoDao.save(parentInfo);
 	}
 
 }

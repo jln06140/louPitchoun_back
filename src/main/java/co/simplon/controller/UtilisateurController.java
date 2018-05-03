@@ -1,5 +1,6 @@
 package co.simplon.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -17,10 +18,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import co.simplon.controller.dto.ParentDto;
 import co.simplon.model.Utilisateur;
 import co.simplon.service.EmployeService;
 import co.simplon.service.ParentService;
 import co.simplon.service.UtilisateurService;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin
@@ -36,20 +41,29 @@ public class UtilisateurController {
 	@Autowired
 	private EmployeService employeService;
 	
+	@Autowired 
+	private ObjectMapper objectMapper;
+	
 	
 	/*
 	 * @return
 	 * Retourne tous les Utilisateurs
+	 * 
 	 */
-	@CrossOrigin
+
+	private ParentDto getPersonDTOFromJson(final String jsoParentDto) throws IOException {
+        return objectMapper.setDateFormat(simpleDateFormat).readValue(jsonPersonDTO, PersonDTO.class);
+    }
+	
 	@GetMapping("/utilisateur")
+	@ApiOperation("Lecture d'un utilisateur")
 	List<Utilisateur> getAllUtilisateur(){
 		return this.utilisateurService.getAllUtilisateurs();
 	}
 	
-	@CrossOrigin
+	
 	@GetMapping("/parent")
-	Set<Utilisateur> getAllParents(){
+	Set<ParentDto> getAllParents(){
 		return this.parentService.getAllParent();
 	}
 	
