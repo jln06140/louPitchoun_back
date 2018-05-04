@@ -1,3 +1,4 @@
+/*
 package co.simplon.model;
 
 import co.simplon.enums.ProfilEnum;
@@ -24,9 +25,12 @@ public class Factory {
 		utilisateur.setMotDePasse("secret");
 		utilisateur.setActif(false);
 		utilisateur.setProfil(profil);
-		utilisateur.setCommonInfo(infoParent);
+		*/
+/*utilisateur.setCommonInfo(infoParent);*//*
+
 		
 		return utilisateur;
 	}
 
 }
+*/

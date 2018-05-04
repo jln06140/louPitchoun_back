@@ -4,8 +4,10 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
-import co.simplon.model.ParentInfo;
+import co.simplon.model.Info;
+
 import co.simplon.model.Profil;
+import co.simplon.model.UserInfo;
 import io.swagger.annotations.ApiModel;
 
 @ApiModel("utilisateur parent")
@@ -18,7 +20,7 @@ public class ParentDto {
 	private String motDePasse;
 	private Date createDate;
 	private Profil profil;
-	private ParentInfo parentInfo;
+	private UserInfo info;
 	
 	public String getLogin() {
 		return login;
@@ -44,15 +46,12 @@ public class ParentDto {
 	public void setProfil(Profil profil) {
 		this.profil = profil;
 	}
-	public ParentInfo getParentInfo() {
-		return parentInfo;
+
+	public UserInfo getInfo() {
+		return info;
 	}
-	public void setParentInfo(ParentInfo parentInfo) {
-		this.parentInfo = parentInfo;
+
+	public void setInfo(UserInfo info) {
+		this.info = info;
 	}
-	
-	
-	
-	
-	
 }

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table ( name = " enfant_info")
 @PrimaryKeyJoinColumn (name = "id")
-public class EnfantInfo extends info{
+public class EnfantInfo extends Info {
 	
 	@Column( name = "date_de_naissance")
 	private Date dateNaissance;

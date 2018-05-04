@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import co.simplon.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,33 +13,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.model.CommonInfo;
-import co.simplon.model.ParentInfo;
+
 import co.simplon.service.InformationService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/information")
 @CrossOrigin
 public class InformationController {
 	
 	@Autowired
 	private InformationService informationService;
 	
-	@GetMapping("/information")
-	List<CommonInfo> getAllInfos(){
+	@GetMapping
+	List<UserInfo> getAllInfos(){
 		return this.informationService.getAllInfos();
 	}
 	
-	@PostMapping("/information")
-	CommonInfo addInfo(@Valid @RequestBody CommonInfo commonInfo) {
-		return this.informationService.addInfo(commonInfo);
+	@PostMapping
+    UserInfo addInfo(@Valid @RequestBody UserInfo userInfo) {
+		return this.informationService.addInfo(userInfo);
 		
 	}
 	
-	@PostMapping("/information/parent")
-	CommonInfo addInfoParent(@Valid @RequestBody ParentInfo parentInfo) {
+	/*@PostMapping("/information/parent")
+    UserInfo addInfoParent(@Valid @RequestBody ParentInfo parentInfo) {
 		return this.informationService.addInfo(parentInfo);
 		
-	}
+	}*/
 
 }

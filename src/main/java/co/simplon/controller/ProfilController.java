@@ -16,24 +16,19 @@ import co.simplon.service.ProfilService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
-public class profilController {
+@RequestMapping("/profil")
+public class ProfilController {
 	
 	@Autowired
 	private ProfilService profilService;
-	
-	@CrossOrigin
-	@GetMapping("/profil")
+
+	@GetMapping
 	List<Profil> getAllProfil(){
 		return this.profilService.getAllProfils();
 	}
-	
-	@CrossOrigin
-	@GetMapping("/profil/{libelle}")
-	ResponseEntity<Profil> getProfilByLibelle(@PathVariable (value = "libelle") String libelle) {
-		Profil profil = this.profilService.getProfilByLibelle(ProfilEnum.valueOf(libelle.toUpperCase()));
-		return ResponseEntity.ok().body(profil);
-	}
-	
 
+	@GetMapping("/{libelle}")
+	Profil getProfilByLibelle(@PathVariable (value = "libelle") String libelle) {
+		return this.profilService.getProfilByLibelle(ProfilEnum.valueOf(libelle.toUpperCase()));
+	}
 }

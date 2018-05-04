@@ -9,9 +9,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Table ( name = "info")
+@Table ( name = "Info")
 @Inheritance ( strategy = InheritanceType.JOINED )
-public abstract class info {
+public abstract class Info {
 
 	@Id
 	@GeneratedValue ( strategy = GenerationType.AUTO)

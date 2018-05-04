@@ -1,14 +1,16 @@
 package co.simplon.controller;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
-import org.modelmapper.ModelMapper;
+import bzh.tibus29.spring.metrik.Metrik;
+import co.simplon.controller.dto.UserDto;
+import co.simplon.controller.dto.UtilisateurDto;
+import co.simplon.controller.mapper.UtilisateurMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.model.Utilisateur;
 import co.simplon.service.EmployeService;
@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/utilisateur")
 public class UtilisateurController {
 
 	@Autowired
@@ -41,11 +41,10 @@ public class UtilisateurController {
 	
 	@Autowired
 	private EmployeService employeService;
-	
+
 	@Autowired
-	private ModelMapper modelMapper;
-	
-	
+	private UtilisateurMapper utilisateurMapper;
+
 	/*
 	 * @return
 	 * Retourne tous les Utilisateurs
@@ -56,10 +55,10 @@ public class UtilisateurController {
         return objectMapper.setDateFormat(simpleDateFormat).readValue(jsonPersonDTO, PersonDTO.class);
     }*/
 	
-	@GetMapping("/utilisateur")
+	@GetMapping
 	@ApiOperation("Lecture d'un utilisateur")
-	List<Utilisateur> getAllUtilisateur(){
-		return this.utilisateurService.getAllUtilisateurs();
+	List<UtilisateurDto> getAllUtilisateur(){
+		return this.utilisateurMapper.map(this.utilisateurService.getAllUtilisateurs());
 	}
 	
 	
@@ -75,7 +74,7 @@ public class UtilisateurController {
 	 *retourne un utilisateur
 	 */
 	
-	@GetMapping("/utilisateur/{id}")
+	@GetMapping("/{id}")
 	ResponseEntity<Utilisateur> getUtilisateurById (@PathVariable(value="id") long id){
 		Utilisateur utilisateur = this.utilisateurService.getUtilisateur(id);
 		if( utilisateur == null )
@@ -89,16 +88,19 @@ public class UtilisateurController {
 	 * creation et ajout d'un nouvel utilisateur
 	 */
 	
-	@PostMapping("/utilisateur")
-	Utilisateur addUtilisateur(@Valid @RequestBody Utilisateur utilisateur) {
-		return this.utilisateurService.createUtilisateur(utilisateur);
+	@PostMapping
+	@Metrik(params = { "utilisateur.login" })
+	UtilisateurDto create(@Valid @RequestBody UtilisateurDto utilisateur) {
+		return this.utilisateurMapper.map(this.utilisateurService.createUtilisateur(utilisateur));
 	}
 
 
-	/*@PostMapping("/utilisateur/parent")
+	@PostMapping("/parent")
 	Utilisateur addUtilisateurParent(@Valid @RequestBody ParentDto parentDto) {
-		return this.utilisateurService.createUtilisateur(modelMapper.map(parentDto, ParentDto.class);
-	}*/
+		String s;
+		//return this.utilisateurService.createUtilisateur(this.utilisateurMapper.map(parentDto));
+		return null;
+	}
 
 	/**
 	 * @param id utilisateur
@@ -107,7 +109,7 @@ public class UtilisateurController {
 	 * mise a jour d'un utilisateur
 	 */
 	
-	@PutMapping("/utilisateur/{id}")
+	@PutMapping("/{id}")
 	ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable(value = "id") Long id,@Valid @RequestBody Utilisateur utilisateur){
 		Utilisateur utilisateurToUpdate = this.utilisateurService.getUtilisateur(id);
 		if (utilisateurToUpdate == null)
@@ -116,7 +118,7 @@ public class UtilisateurController {
 		utilisateurToUpdate.setMotDePasse(utilisateur.getMotDePasse());
 		utilisateurToUpdate.setActif(utilisateur.isActif());
 		utilisateurToUpdate.setProfil(utilisateur.getProfil());
-		utilisateurToUpdate.setCommonInfo(utilisateur.getCommonInfo());
+		//utilisateurToUpdate.setInfo(utilisateur.getInfo());
 		
 		//TOdo
 		//relier profil et les infos
@@ -131,7 +133,7 @@ public class UtilisateurController {
 	 * @suppression d'un utilisateur
 	 */
 	
-	@DeleteMapping("/utilisateur/{id}")
+	@DeleteMapping("/{id}")
 	ResponseEntity<Utilisateur> deleteUtilisateur(@PathVariable(value="id") Long id){
 		Utilisateur utilisateur = this.utilisateurService.getUtilisateur(id);
 		if(utilisateur == null)
@@ -140,7 +142,4 @@ public class UtilisateurController {
 		this.utilisateurService.deleteUtilisateur(utilisateur);
 		return ResponseEntity.ok().build();
 	}
-	
-	
-	
 }
