@@ -1,14 +1,13 @@
 package co.simplon.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 
-import co.simplon.controller.dto.UserDto;
+import co.simplon.controller.dto.EmployeDto;
+import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.dto.UtilisateurDto;
-import co.simplon.exception.PitchounErrorEnum;
-import co.simplon.exception.PitchounException;
+import co.simplon.controller.mapper.UtilisateurMapper;
 import co.simplon.service.ProfilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,10 +29,40 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private UtilisateurMapper utilisateurMapper;
+
+
+	@Override
+	public UtilisateurDto createUtilisateur(UtilisateurDto utilisateurDto) {
+		Utilisateur utilisateurToCreate = this.utilisateurMapper.map(utilisateurDto);
+		utilisateurToCreate.setProfil(this.profilService.getProfilByLibelle(utilisateurDto.getProfil()));
+		return this.utilisateurMapper.map(this.utilisateurDao.save(utilisateurToCreate));
+
+	}
+
+	public ParentDto createUtilisateurParent(ParentDto parentDto){
+		Utilisateur utilisateur = this.utilisateurMapper.ParentDtoToUtilisateur(parentDto);
+		return this.utilisateurMapper.utilisateurToParentDto(this.utilisateurDao.save(utilisateur));
+	}
+
+	public EmployeDto createUtilisateurEmploye(EmployeDto employeDto){
+		Utilisateur utilisateurToCreate = this.utilisateurMapper.mapEmploye(employeDto);
+		return this.utilisateurMapper.mapEmploye(this.utilisateurDao.save(utilisateurToCreate));
+	}
+
 	@Override
 	public List<Utilisateur> getAllUtilisateurs() {
 		return this.utilisateurDao.findAll();
 	}
+
+	@Override
+	public List<Utilisateur> getAllUtilisateursParent() {
+		return this.utilisateurDao.findAll().stream()
+				.filter(user -> user.getProfil().getLibelle().toString().equals("PARENT"))
+				.collect(Collectors.toList());
+	}
+
 
 	@Override
 	public Utilisateur getUtilisateur(Long id) {
@@ -47,35 +76,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Utilisateur createUtilisateur(UtilisateurDto utilisateur) {
-
-		final Utilisateur utilisateurToCreate = new Utilisateur();
-		//utilisateurToCreate.setCreatedDate(LocalDateTime.now());
-		utilisateurToCreate.setActif(true);
-		utilisateurToCreate.setMotDePasse(this.passwordEncoder.encode(utilisateur.getMotDePasse()));
-		utilisateurToCreate.setEmail(utilisateur.getEmail());
-		utilisateurToCreate.setProfil(this.profilService.getProfilByLibelle(utilisateur.getProfil()));
-
-		return this.utilisateurDao.save(utilisateurToCreate);
-	}
-
-
-	@Override
 	public void deleteUtilisateur(Utilisateur utilisateur) {
 		this.utilisateurDao.delete(utilisateur);
 		
 	}
 
-	@Override
-	public Utilisateur getByLogAndPass(String log, String mdp) throws Exception {
-		Utilisateur utilisateur = this.utilisateurDao.findByEmail(log);
-		if (utilisateur == null) {
-			throw new Exception();
-		}
-		return utilisateur;	
-	}
 
-    @Override
+
+   /* @Override
     public Utilisateur findByEmail(String email) {
 		final Utilisateur user = this.utilisateurDao.findByEmail(email);
 
@@ -84,5 +92,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 
 		return user;
-    }
+    }*/
+
+
 }

@@ -1,13 +1,20 @@
 package co.simplon.controller.mapper;
 
+import co.simplon.controller.dto.EmployeDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.dto.UtilisateurDto;
 import co.simplon.enums.ProfilEnum;
+import co.simplon.model.Enfant;
 import co.simplon.model.Profil;
 import co.simplon.model.Utilisateur;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Generated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Generated(
@@ -16,34 +23,135 @@ import org.springframework.stereotype.Component;
 @Component
 public class UtilisateurMapperImpl implements UtilisateurMapper {
 
+    @Autowired
+    private InfoMapper infoMapper;
+
     @Override
-    public ParentDto mapParent(Utilisateur user) {
+    public ParentDto utilisateurToParentDto(Utilisateur user) {
         if ( user == null ) {
             return null;
         }
 
         ParentDto parentDto = new ParentDto();
 
+        parentDto.setInfoParent( infoMapper.infoParentDtoToInfo( user.getInfo() ) );
+        if ( user.getCreatedDate() != null ) {
+            parentDto.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( user.getCreatedDate() ) );
+        }
+        if ( user.getUpdatedDate() != null ) {
+            parentDto.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( user.getUpdatedDate() ) );
+        }
+        ProfilEnum libelle = userProfilLibelle( user );
+        if ( libelle != null ) {
+            parentDto.setProfil( libelle );
+        }
         parentDto.setMotDePasse( user.getMotDePasse() );
-        parentDto.setProfil( user.getProfil() );
-        parentDto.setInfo( user.getInfo() );
+        parentDto.setActif( user.isActif() );
+        Set<Enfant> set = user.getEnfants();
+        if ( set != null ) {
+            parentDto.setEnfants( new HashSet<Enfant>( set ) );
+        }
+        else {
+            parentDto.setEnfants( null );
+        }
 
         return parentDto;
     }
 
     @Override
-    public Utilisateur map(ParentDto user) {
-        if ( user == null ) {
+    public Utilisateur ParentDtoToUtilisateur(ParentDto parent) {
+        if ( parent == null ) {
             return null;
         }
 
         Utilisateur utilisateur = new Utilisateur();
 
-        utilisateur.setMotDePasse( user.getMotDePasse() );
-        utilisateur.setProfil( user.getProfil() );
-        utilisateur.setInfo( user.getInfo() );
+        try {
+            if ( parent.getCreatedDate() != null ) {
+                utilisateur.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( parent.getCreatedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        try {
+            if ( parent.getUpdatedDate() != null ) {
+                utilisateur.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( parent.getUpdatedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        utilisateur.setInfo( infoMapper.infoToInfoParentDto( parent.getInfoParent() ) );
+        utilisateur.setMotDePasse( parent.getMotDePasse() );
+        utilisateur.setActif( parent.isActif() );
+        utilisateur.setProfil( profilEnumToProfil( parent.getProfil() ) );
+        Set<Enfant> set = parent.getEnfants();
+        if ( set != null ) {
+            utilisateur.setEnfants( new HashSet<Enfant>( set ) );
+        }
+        else {
+            utilisateur.setEnfants( null );
+        }
 
         return utilisateur;
+    }
+
+    @Override
+    public Utilisateur mapEmploye(EmployeDto employe) {
+        if ( employe == null ) {
+            return null;
+        }
+
+        Utilisateur utilisateur = new Utilisateur();
+
+        try {
+            if ( employe.getCreatedDate() != null ) {
+                utilisateur.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( employe.getCreatedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        try {
+            if ( employe.getUpdatedDate() != null ) {
+                utilisateur.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( employe.getUpdatedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        utilisateur.setInfo( infoMapper.infoToInfoEmployeDto( employe.getInfoEmploye() ) );
+        utilisateur.setMotDePasse( employe.getMotDePasse() );
+        utilisateur.setActif( employe.isActif() );
+        utilisateur.setProfil( profilEnumToProfil( employe.getProfil() ) );
+
+        return utilisateur;
+    }
+
+    @Override
+    public EmployeDto mapEmploye(Utilisateur utilisateur) {
+        if ( utilisateur == null ) {
+            return null;
+        }
+
+        EmployeDto employeDto = new EmployeDto();
+
+        if ( utilisateur.getCreatedDate() != null ) {
+            employeDto.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
+        }
+        if ( utilisateur.getUpdatedDate() != null ) {
+            employeDto.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getUpdatedDate() ) );
+        }
+        employeDto.setInfoEmploye( infoMapper.infoEmployeDtotoInfo( utilisateur.getInfo() ) );
+        ProfilEnum libelle = userProfilLibelle( utilisateur );
+        if ( libelle != null ) {
+            employeDto.setProfil( libelle );
+        }
+        employeDto.setMotDePasse( utilisateur.getMotDePasse() );
+        employeDto.setActif( utilisateur.isActif() );
+
+        return employeDto;
     }
 
     @Override
@@ -54,14 +162,55 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         UtilisateurDto utilisateurDto = new UtilisateurDto();
 
-        ProfilEnum libelle = utilisateurProfilLibelle( utilisateur );
+        utilisateurDto.setInfoUserDto( infoMapper.map( utilisateur.getInfo() ) );
+        if ( utilisateur.getCreatedDate() != null ) {
+            utilisateurDto.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
+        }
+        if ( utilisateur.getUpdatedDate() != null ) {
+            utilisateurDto.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getUpdatedDate() ) );
+        }
+        ProfilEnum libelle = userProfilLibelle( utilisateur );
         if ( libelle != null ) {
             utilisateurDto.setProfil( libelle );
         }
-        utilisateurDto.setEmail( utilisateur.getEmail() );
         utilisateurDto.setMotDePasse( utilisateur.getMotDePasse() );
+        utilisateurDto.setUsername( utilisateur.getUsername() );
+        utilisateurDto.setActif( utilisateur.isActif() );
 
         return utilisateurDto;
+    }
+
+    @Override
+    public Utilisateur map(UtilisateurDto utilisateur) {
+        if ( utilisateur == null ) {
+            return null;
+        }
+
+        Utilisateur utilisateur1 = new Utilisateur();
+
+        try {
+            if ( utilisateur.getCreatedDate() != null ) {
+                utilisateur1.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( utilisateur.getCreatedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        try {
+            if ( utilisateur.getUpdatedDate() != null ) {
+                utilisateur1.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( utilisateur.getUpdatedDate() ) );
+            }
+        }
+        catch ( ParseException e ) {
+            throw new RuntimeException( e );
+        }
+        utilisateur1.setInfo( infoMapper.map( utilisateur.getInfoUserDto() ) );
+        utilisateur1.setMotDePasse( utilisateur.getMotDePasse() );
+        utilisateur1.setActif( utilisateur.isActif() );
+        utilisateur1.setProfil( profilEnumToProfil( utilisateur.getProfil() ) );
+        utilisateur1.setUsername( utilisateur.getUsername() );
+
+        return utilisateur1;
     }
 
     @Override
@@ -78,7 +227,21 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         return list;
     }
 
-    private ProfilEnum utilisateurProfilLibelle(Utilisateur utilisateur) {
+    @Override
+    public List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateur) {
+        if ( utilisateur == null ) {
+            return null;
+        }
+
+        List<ParentDto> list = new ArrayList<ParentDto>( utilisateur.size() );
+        for ( Utilisateur utilisateur1 : utilisateur ) {
+            list.add( utilisateurToParentDto( utilisateur1 ) );
+        }
+
+        return list;
+    }
+
+    private ProfilEnum userProfilLibelle(Utilisateur utilisateur) {
         if ( utilisateur == null ) {
             return null;
         }
@@ -91,5 +254,15 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
             return null;
         }
         return libelle;
+    }
+
+    protected Profil profilEnumToProfil(ProfilEnum profilEnum) {
+        if ( profilEnum == null ) {
+            return null;
+        }
+
+        Profil profil = new Profil();
+
+        return profil;
     }
 }

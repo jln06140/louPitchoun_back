@@ -15,6 +15,9 @@ public class UserInfo extends Info {
 	
 	@Column(unique = true)
 	private String email;
+
+	@Column(unique = true)
+	private String matricule;
 	
 	@Column ( name = "tel_mobile")
 	private String telMobile;
@@ -93,5 +96,13 @@ public class UserInfo extends Info {
 
 	public void setTypeContrat(String typeContrat) {
 		this.typeContrat = typeContrat;
+	}
+
+	public String getMatricule() {
+		return matricule;
+	}
+
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
 	}
 }

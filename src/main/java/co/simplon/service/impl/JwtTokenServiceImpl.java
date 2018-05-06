@@ -110,7 +110,6 @@ public class JwtTokenServiceImpl implements JwtTokenService {
 
         claims.setSubject(String.valueOf(user.getId()));
         claims.put("username", user.getUsername());
-        claims.put("email", user.getEmail());
         claims.put("roles", String.join(",", AuthorityUtils.authorityListToSet(user.getAuthorities())));
         claims.put(USER_SECRET, user.getUserSecret());
 

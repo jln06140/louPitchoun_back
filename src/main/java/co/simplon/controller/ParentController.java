@@ -84,7 +84,7 @@
 //		parentToUpdate.setDateDeNaissance(parent.getDateDeNaissance());
 //		parentToUpdate.setAdresse(parent.getAdresse());
 //		parentToUpdate.setAdressePro(parent.getAdressePro());
-//		parentToUpdate.setEmail(parent.getEmail());
+//		parentToUpdate.setEmail(parent.getUsername());
 //		parentToUpdate.setTelFixe(parent.getTelFixe());
 //		parentToUpdate.setTelMobile(parent.getTelMobile());
 //		parentToUpdate.setTelPro(parent.getTelPro());

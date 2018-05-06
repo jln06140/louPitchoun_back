@@ -5,8 +5,10 @@ import java.util.List;
 import javax.validation.Valid;
 
 import bzh.tibus29.spring.metrik.Metrik;
+import co.simplon.controller.dto.EmployeDto;
 import co.simplon.controller.dto.UserDto;
 import co.simplon.controller.dto.UtilisateurDto;
+
 import co.simplon.controller.mapper.UtilisateurMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +62,12 @@ public class UtilisateurController {
 	List<UtilisateurDto> getAllUtilisateur(){
 		return this.utilisateurMapper.map(this.utilisateurService.getAllUtilisateurs());
 	}
+
+	@GetMapping("/parents")
+	@ApiOperation("Lecture d'un utilisateur parent")
+	List<ParentDto> getAllUtilisateurParent(){
+		return this.utilisateurMapper.mapListUtilisateurToParentDto(this.utilisateurService.getAllUtilisateursParent());
+	}
 	
 	
 	/*@GetMapping("/parent")
@@ -91,15 +99,18 @@ public class UtilisateurController {
 	@PostMapping
 	@Metrik(params = { "utilisateur.login" })
 	UtilisateurDto create(@Valid @RequestBody UtilisateurDto utilisateur) {
-		return this.utilisateurMapper.map(this.utilisateurService.createUtilisateur(utilisateur));
+		return this.utilisateurService.createUtilisateur(utilisateur);
 	}
 
 
 	@PostMapping("/parent")
-	Utilisateur addUtilisateurParent(@Valid @RequestBody ParentDto parentDto) {
-		String s;
-		//return this.utilisateurService.createUtilisateur(this.utilisateurMapper.map(parentDto));
-		return null;
+	ParentDto createUtilisateurParent(@Valid @RequestBody ParentDto parentDto) {
+		return this.utilisateurService.createUtilisateurParent(parentDto);
+	}
+
+	@PostMapping("/employe")
+	EmployeDto createUtilisateurEmploye(@Valid @RequestBody EmployeDto employeDto){
+		return this.utilisateurService.createUtilisateurEmploye(employeDto);
 	}
 
 	/**

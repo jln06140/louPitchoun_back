@@ -1,9 +1,12 @@
 package co.simplon.controller.dto;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
+import co.simplon.enums.ProfilEnum;
+import co.simplon.model.Enfant;
 import co.simplon.model.Info;
 
 import co.simplon.model.Profil;
@@ -15,12 +18,15 @@ public class ParentDto {
 
 	@NotNull
 	private String login;
-	
+
 	@NotNull
 	private String motDePasse;
-	private Date createDate;
-	private Profil profil;
-	private UserInfo info;
+	private boolean actif;
+	private String createdDate;
+	private String updatedDate;
+	private ProfilEnum profil;
+	private InfoParentDto infoParent;
+	private Set<Enfant> enfants;
 	
 	public String getLogin() {
 		return login;
@@ -34,24 +40,53 @@ public class ParentDto {
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
 	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-	public Profil getProfil() {
+
+	public ProfilEnum getProfil() {
 		return profil;
 	}
-	public void setProfil(Profil profil) {
+
+	public void setProfil(ProfilEnum profil) {
 		this.profil = profil;
 	}
 
-	public UserInfo getInfo() {
-		return info;
+	public boolean isActif() {
+		return actif;
 	}
 
-	public void setInfo(UserInfo info) {
-		this.info = info;
+	public void setActif(boolean actif) {
+		this.actif = actif;
 	}
+
+	public Set<Enfant> getEnfants() {
+		return enfants;
+	}
+
+	public void setEnfants(Set<Enfant> enfants) {
+		this.enfants = enfants;
+	}
+
+	public String getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(String updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public InfoParentDto getInfoParent() {
+		return infoParent;
+	}
+
+	public void setInfoParent(InfoParentDto infoParent) {
+		this.infoParent = infoParent;
+	}
+
 }

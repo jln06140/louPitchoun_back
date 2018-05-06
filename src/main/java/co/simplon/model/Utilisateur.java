@@ -29,9 +29,6 @@ public class Utilisateur {
     @Column(unique = true)
     private String username;
 
-    @Column(unique = true)
-    private String email;
-
     @Column(name = "mot_de_passe")
     private String motDePasse;
 
@@ -65,14 +62,6 @@ public class Utilisateur {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getMotDePasse() {

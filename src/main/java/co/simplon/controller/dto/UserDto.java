@@ -10,14 +10,14 @@ import java.util.Collection;
 public class UserDto extends User {
 
     private final Long id;
-    private final String email;
+    private final String username;
     private final LocalDate lastPasswordResetDate;
     private final String userSecret;
 
-    public UserDto(Long id, String username, String password, String email, Collection<? extends GrantedAuthority> authorities, @SuppressWarnings("unused") boolean enabled, LocalDate lastPasswordResetDate, String userSecret) {
+    public UserDto(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities, @SuppressWarnings("unused") boolean enabled, LocalDate lastPasswordResetDate, String userSecret) {
         super(username, password, enabled, true, true, true, authorities);
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.lastPasswordResetDate = lastPasswordResetDate;
         this.userSecret = userSecret;
     }
@@ -25,15 +25,6 @@ public class UserDto extends User {
     @JsonIgnore
     public Long getId() {
         return id;
-    }
-
-    @Override
-    public String getUsername() {
-        return super.getUsername();
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public LocalDate getLastPasswordResetDate() {

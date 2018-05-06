@@ -3,6 +3,8 @@ package co.simplon.service;
 import java.util.List;
 import java.util.Optional;
 
+import co.simplon.controller.dto.EmployeDto;
+import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.dto.UserDto;
 import co.simplon.controller.dto.UtilisateurDto;
 import co.simplon.model.Utilisateur;
@@ -15,17 +17,26 @@ import co.simplon.model.Utilisateur;
  */
 public interface UtilisateurService {
 
+	UtilisateurDto createUtilisateur(UtilisateurDto utilisateurDto);
+
+	ParentDto createUtilisateurParent(ParentDto parentDto);
+
+	EmployeDto createUtilisateurEmploye(EmployeDto employeDto);
+
 	List <Utilisateur> getAllUtilisateurs();
+
+	List <Utilisateur> getAllUtilisateursParent();
 
 	Utilisateur getUtilisateur( Long id );
 
 	Utilisateur updateUtilisateur( Utilisateur utilisateur);
 
-	Utilisateur createUtilisateur(UtilisateurDto utilisateur);
-
 	void deleteUtilisateur( Utilisateur utilisateur);
 
-	Utilisateur getByLogAndPass(String log, String mdp) throws Exception;
 
-	Utilisateur findByEmail(String username);
+	/*Utilisateur getByLogAndPass(String log, String mdp) throws Exception;
+
+	Utilisateur findByEmail(String username);*/
+
+
 }
