@@ -214,31 +214,45 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
     }
 
     @Override
-    public List<UtilisateurDto> map(List<Utilisateur> utilisateur) {
-        if ( utilisateur == null ) {
+    public List<UtilisateurDto> map(List<Utilisateur> utilisateurs) {
+        if ( utilisateurs == null ) {
             return null;
         }
 
-        List<UtilisateurDto> list = new ArrayList<UtilisateurDto>( utilisateur.size() );
-        for ( Utilisateur utilisateur1 : utilisateur ) {
-            list.add( map( utilisateur1 ) );
+        List<UtilisateurDto> list = new ArrayList<UtilisateurDto>( utilisateurs.size() );
+        for ( Utilisateur utilisateur : utilisateurs ) {
+            list.add( map( utilisateur ) );
         }
 
         return list;
     }
 
     @Override
-    public List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateur) {
-        if ( utilisateur == null ) {
+    public List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs) {
+        if ( utilisateurs == null ) {
             return null;
         }
 
-        List<ParentDto> list = new ArrayList<ParentDto>( utilisateur.size() );
-        for ( Utilisateur utilisateur1 : utilisateur ) {
-            list.add( utilisateurToParentDto( utilisateur1 ) );
+        List<ParentDto> list = new ArrayList<ParentDto>( utilisateurs.size() );
+        for ( Utilisateur utilisateur : utilisateurs ) {
+            list.add( utilisateurToParentDto( utilisateur ) );
         }
 
         return list;
+    }
+
+    @Override
+    public Set<EmployeDto> mapListUtilisateurToEmployDto(List<Utilisateur> utilisateurs) {
+        if ( utilisateurs == null ) {
+            return null;
+        }
+
+        Set<EmployeDto> set = new HashSet<EmployeDto>( Math.max( (int) ( utilisateurs.size() / .75f ) + 1, 16 ) );
+        for ( Utilisateur utilisateur : utilisateurs ) {
+            set.add( mapEmploye( utilisateur ) );
+        }
+
+        return set;
     }
 
     private ProfilEnum userProfilLibelle(Utilisateur utilisateur) {

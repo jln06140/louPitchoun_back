@@ -1,6 +1,7 @@
 package co.simplon.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -65,7 +66,7 @@ public class UtilisateurController {
 
 	@GetMapping("/parents")
 	@ApiOperation("Lecture d'un utilisateur parent")
-	List<ParentDto> getAllUtilisateurParent(){
+	Set<ParentDto> getAllUtilisateurParent(){
 		return this.utilisateurMapper.mapListUtilisateurToParentDto(this.utilisateurService.getAllUtilisateursParent());
 	}
 	

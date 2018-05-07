@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper(uses=InfoMapper.class)
 public interface UtilisateurMapper {
@@ -73,7 +74,9 @@ public interface UtilisateurMapper {
     Utilisateur map(UtilisateurDto utilisateur);
 
 
-    List<UtilisateurDto> map(List<Utilisateur> utilisateur);
+    List<UtilisateurDto> map(List<Utilisateur> utilisateurs);
 
-    List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateur);
+    Set<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs);
+
+    Set<EmployeDto> mapListUtilisateurToEmployDto(List<Utilisateur> utilisateurs);
 }

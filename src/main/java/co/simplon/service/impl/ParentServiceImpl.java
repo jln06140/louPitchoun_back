@@ -2,6 +2,9 @@ package co.simplon.service.impl;
 
 import java.util.Set;
 
+import co.simplon.controller.dto.EmployeDto;
+import co.simplon.controller.dto.ParentDto;
+import co.simplon.controller.mapper.UtilisateurMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,30 +28,37 @@ public class ParentServiceImpl implements ParentService{
 	@Autowired 
 	private ProfilService profilService;
 
+	@Autowired
+	private UtilisateurMapper utilisateurMapper;
+
 	@Override
-	public Set<Utilisateur> getAllParent() {
+	public Set<ParentDto> getAllParents() {
 		Profil profil = this.profilService.getProfilByLibelle(ProfilEnum.PARENT);
-		return this.parentDao.findByProfil(profil);
+
+		return this.utilisateurMapper.mapListUtilisateurToParentDto(this.parentDao.findByProfil(profil));
+	}
+
+	public ParentDto createUtilisateurParent(ParentDto parentDto){
+		Utilisateur utilisateur = this.utilisateurMapper.ParentDtoToUtilisateur(parentDto);
+		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.save(utilisateur));
 	}
 
 	@Override
-	public Utilisateur addParent(Utilisateur parent) {
-		return this.parentDao.save(parent);
+	public ParentDto getParent(Long id) {
+
+		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.findOne(id));
 	}
 
 	@Override
-	public Utilisateur getParent(Long id) {
-		return this.parentDao.findOne(id);
+	public ParentDto updateParent(ParentDto parent) {
+		Utilisateur utilisateurToUpdate = this.utilisateurMapper.ParentDtoToUtilisateur(parent);
+		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.save(utilisateurToUpdate));
 	}
 
 	@Override
-	public Utilisateur updateParent(Utilisateur parent) {
-		return this.parentDao.save(parent);
-	}
+	public void deleteParent(ParentDto parent) {
 
-	@Override
-	public void deleteParent(Utilisateur parent) {
-		this.parentDao.delete(parent);
+		this.parentDao.delete(this.utilisateurMapper.ParentDtoToUtilisateur(parent));
 		
 	}
 
