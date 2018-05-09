@@ -54,6 +54,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         else {
             parentDto.setEnfants( null );
         }
+        parentDto.setId( user.getId() );
 
         return parentDto;
     }
@@ -83,6 +84,9 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
             throw new RuntimeException( e );
         }
         utilisateur.setInfo( infoMapper.infoToInfoParentDto( parent.getInfoParent() ) );
+        if ( parent.getId() != null ) {
+            utilisateur.setId( parent.getId() );
+        }
         utilisateur.setMotDePasse( parent.getMotDePasse() );
         utilisateur.setActif( parent.isActif() );
         utilisateur.setProfil( profilEnumToProfil( parent.getProfil() ) );
@@ -176,6 +180,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         utilisateurDto.setMotDePasse( utilisateur.getMotDePasse() );
         utilisateurDto.setUsername( utilisateur.getUsername() );
         utilisateurDto.setActif( utilisateur.isActif() );
+        utilisateurDto.setId( utilisateur.getId() );
 
         return utilisateurDto;
     }
@@ -205,6 +210,9 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
             throw new RuntimeException( e );
         }
         utilisateur1.setInfo( infoMapper.map( utilisateur.getInfoUserDto() ) );
+        if ( utilisateur.getId() != null ) {
+            utilisateur1.setId( utilisateur.getId() );
+        }
         utilisateur1.setMotDePasse( utilisateur.getMotDePasse() );
         utilisateur1.setActif( utilisateur.isActif() );
         utilisateur1.setProfil( profilEnumToProfil( utilisateur.getProfil() ) );
@@ -228,21 +236,21 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
     }
 
     @Override
-    public List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs) {
+    public Set<ParentDto> mapListUtilisateurToParentDto(Set<Utilisateur> utilisateurs) {
         if ( utilisateurs == null ) {
             return null;
         }
 
-        List<ParentDto> list = new ArrayList<ParentDto>( utilisateurs.size() );
+        Set<ParentDto> set = new HashSet<ParentDto>( Math.max( (int) ( utilisateurs.size() / .75f ) + 1, 16 ) );
         for ( Utilisateur utilisateur : utilisateurs ) {
-            list.add( utilisateurToParentDto( utilisateur ) );
+            set.add( utilisateurToParentDto( utilisateur ) );
         }
 
-        return list;
+        return set;
     }
 
     @Override
-    public Set<EmployeDto> mapListUtilisateurToEmployDto(List<Utilisateur> utilisateurs) {
+    public Set<EmployeDto> mapListUtilisateurToEmployDto(Set<Utilisateur> utilisateurs) {
         if ( utilisateurs == null ) {
             return null;
         }

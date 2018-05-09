@@ -55,6 +55,7 @@ co\simplon\controller\mapper\InfoMapperImpl.class
 co\simplon\controller\dto\JwtDto.class
 co\simplon\exception\PitchounErrorEnum.class
 co\simplon\model\TypeActivite.class
+co\simplon\controller\ParentController.class
 co\simplon\dao\CommonInfoDao.class
 co\simplon\dao\EmployeDao.class
 co\simplon\model\JourneeEnfant.class

@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/loupitchoun?useSSL=false
-    username: root
-    password: root
+    username: admin
+    password: admin
     driver-class-name: com.mysql.jdbc.Driver
     platform: mysql
   jpa:

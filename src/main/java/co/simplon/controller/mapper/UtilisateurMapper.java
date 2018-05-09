@@ -76,7 +76,7 @@ public interface UtilisateurMapper {
 
     List<UtilisateurDto> map(List<Utilisateur> utilisateurs);
 
-    Set<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs);
+    Set<ParentDto> mapListUtilisateurToParentDto(Set<Utilisateur> utilisateurs);
 
-    Set<EmployeDto> mapListUtilisateurToEmployDto(List<Utilisateur> utilisateurs);
+    Set<EmployeDto> mapListUtilisateurToEmployDto(Set<Utilisateur> utilisateurs);
 }

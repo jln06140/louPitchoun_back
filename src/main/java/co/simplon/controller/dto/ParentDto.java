@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiModel;
 @ApiModel("utilisateur parent")
 public class ParentDto {
 
+	private Long id;
 	@NotNull
 	private String login;
 
@@ -89,4 +90,11 @@ public class ParentDto {
 		this.infoParent = infoParent;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

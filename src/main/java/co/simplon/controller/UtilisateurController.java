@@ -59,16 +59,16 @@ public class UtilisateurController {
     }*/
 	
 	@GetMapping
-	@ApiOperation("Lecture d'un utilisateur")
+	@ApiOperation("Lecture de tous utilisateurs")
 	List<UtilisateurDto> getAllUtilisateur(){
 		return this.utilisateurMapper.map(this.utilisateurService.getAllUtilisateurs());
 	}
 
-	@GetMapping("/parents")
+	/*@GetMapping("/parents")
 	@ApiOperation("Lecture d'un utilisateur parent")
 	Set<ParentDto> getAllUtilisateurParent(){
 		return this.utilisateurMapper.mapListUtilisateurToParentDto(this.utilisateurService.getAllUtilisateursParent());
-	}
+	}*/
 	
 	
 	/*@GetMapping("/parent")
@@ -84,11 +84,13 @@ public class UtilisateurController {
 	 */
 	
 	@GetMapping("/{id}")
-	ResponseEntity<Utilisateur> getUtilisateurById (@PathVariable(value="id") long id){
+	@ApiOperation("Lecture d'un utilisateur")
+	ResponseEntity<UtilisateurDto> getUtilisateurById (@PathVariable(value="id") long id){
 		Utilisateur utilisateur = this.utilisateurService.getUtilisateur(id);
+		UtilisateurDto utilisateurDto = this.utilisateurMapper.map(utilisateur);
 		if( utilisateur == null )
 			return ResponseEntity.notFound().build();
-		return ResponseEntity.ok().body(utilisateur);
+		return ResponseEntity.ok().body(utilisateurDto);
 	}
 	
 	/**

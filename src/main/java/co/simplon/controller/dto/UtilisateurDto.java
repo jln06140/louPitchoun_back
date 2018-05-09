@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 @ApiModel("utilisateur")
 public class UtilisateurDto {
 
+    private Long id;
     private String username;
     private String motDePasse;
     private boolean actif;
@@ -70,5 +71,12 @@ public class UtilisateurDto {
 
     public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
