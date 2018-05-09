@@ -1,11 +1,15 @@
 package co.simplon.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import co.simplon.controller.dto.EmployeDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.mapper.UtilisateurMapper;
+import co.simplon.service.UtilisateurService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import co.simplon.dao.ParentDao;
@@ -24,12 +28,18 @@ public class ParentServiceImpl implements ParentService{
 
 	@Autowired
 	private ParentDao parentDao;
+
+	@Autowired
+	private UtilisateurService utilisateurService;
 	
 	@Autowired 
 	private ProfilService profilService;
 
 	@Autowired
 	private UtilisateurMapper utilisateurMapper;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public Set<ParentDto> getAllParents() {
@@ -51,8 +61,25 @@ public class ParentServiceImpl implements ParentService{
 
 	@Override
 	public ParentDto updateParent(ParentDto parent) {
-		Utilisateur utilisateurToUpdate = this.utilisateurMapper.ParentDtoToUtilisateur(parent);
-		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.save(utilisateurToUpdate));
+		Utilisateur utilisateur = this.utilisateurMapper.map(this.utilisateurService.getUtilisateur(parent.getId()));
+		Utilisateur utilisateurUpdated = this.utilisateurMapper.ParentDtoToUtilisateur(parent);
+
+		//verification nouveau mot de passe different de l'ancien
+		//recuperation et encodage du nouveau mot de passe
+		if(!utilisateur.getMotDePasse().equals(utilisateurUpdated.getMotDePasse())) {
+			String NewMotDePasse = this.passwordEncoder.encode(utilisateurUpdated.getMotDePasse());
+			utilisateur.setMotDePasse(NewMotDePasse);
+		}
+
+		utilisateur.setInfo(utilisateurUpdated.getInfo());
+		utilisateur.getInfo().setEmail(utilisateurUpdated.getInfo().getEmail());
+
+		//recuperation du profil
+		utilisateur.setProfil(this.profilService.getProfilByLibelle(parent.getProfil()));
+
+		//mise a jour de la date de moddification
+		utilisateur.setUpdatedDate(LocalDateTime.now());
+		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.save(utilisateur));
 	}
 
 	@Override

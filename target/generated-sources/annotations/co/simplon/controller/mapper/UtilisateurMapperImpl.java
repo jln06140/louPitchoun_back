@@ -7,8 +7,7 @@ import co.simplon.enums.ProfilEnum;
 import co.simplon.model.Enfant;
 import co.simplon.model.Profil;
 import co.simplon.model.Utilisateur;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -36,15 +35,16 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         parentDto.setInfoParent( infoMapper.infoParentDtoToInfo( user.getInfo() ) );
         if ( user.getCreatedDate() != null ) {
-            parentDto.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( user.getCreatedDate() ) );
+            parentDto.setCreatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( user.getCreatedDate() ) );
         }
         if ( user.getUpdatedDate() != null ) {
-            parentDto.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( user.getUpdatedDate() ) );
+            parentDto.setUpdatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( user.getUpdatedDate() ) );
         }
         ProfilEnum libelle = userProfilLibelle( user );
         if ( libelle != null ) {
             parentDto.setProfil( libelle );
         }
+        parentDto.setUsername( user.getUsername() );
         parentDto.setMotDePasse( user.getMotDePasse() );
         parentDto.setActif( user.isActif() );
         Set<Enfant> set = user.getEnfants();
@@ -67,26 +67,14 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         Utilisateur utilisateur = new Utilisateur();
 
-        try {
-            if ( parent.getCreatedDate() != null ) {
-                utilisateur.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( parent.getCreatedDate() ) );
-            }
+        if ( parent.getCreatedDate() != null ) {
+            utilisateur.setCreatedDate( java.time.LocalDateTime.parse( parent.getCreatedDate(), DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) );
         }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
-        }
-        try {
-            if ( parent.getUpdatedDate() != null ) {
-                utilisateur.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( parent.getUpdatedDate() ) );
-            }
-        }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
+        if ( parent.getUpdatedDate() != null ) {
+            utilisateur.setUpdatedDate( java.time.LocalDateTime.parse( parent.getUpdatedDate(), DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) );
         }
         utilisateur.setInfo( infoMapper.infoToInfoParentDto( parent.getInfoParent() ) );
-        if ( parent.getId() != null ) {
-            utilisateur.setId( parent.getId() );
-        }
+        utilisateur.setId( parent.getId() );
         utilisateur.setMotDePasse( parent.getMotDePasse() );
         utilisateur.setActif( parent.isActif() );
         utilisateur.setProfil( profilEnumToProfil( parent.getProfil() ) );
@@ -97,6 +85,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         else {
             utilisateur.setEnfants( null );
         }
+        utilisateur.setUsername( parent.getUsername() );
 
         return utilisateur;
     }
@@ -109,21 +98,11 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         Utilisateur utilisateur = new Utilisateur();
 
-        try {
-            if ( employe.getCreatedDate() != null ) {
-                utilisateur.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( employe.getCreatedDate() ) );
-            }
+        if ( employe.getCreatedDate() != null ) {
+            utilisateur.setCreatedDate( java.time.LocalDateTime.parse( employe.getCreatedDate(), DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) );
         }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
-        }
-        try {
-            if ( employe.getUpdatedDate() != null ) {
-                utilisateur.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( employe.getUpdatedDate() ) );
-            }
-        }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
+        if ( employe.getUpdatedDate() != null ) {
+            utilisateur.setUpdatedDate( java.time.LocalDateTime.parse( employe.getUpdatedDate(), DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) );
         }
         utilisateur.setInfo( infoMapper.infoToInfoEmployeDto( employe.getInfoEmploye() ) );
         utilisateur.setMotDePasse( employe.getMotDePasse() );
@@ -142,10 +121,10 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         EmployeDto employeDto = new EmployeDto();
 
         if ( utilisateur.getCreatedDate() != null ) {
-            employeDto.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
+            employeDto.setCreatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
         }
         if ( utilisateur.getUpdatedDate() != null ) {
-            employeDto.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getUpdatedDate() ) );
+            employeDto.setUpdatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getUpdatedDate() ) );
         }
         employeDto.setInfoEmploye( infoMapper.infoEmployeDtotoInfo( utilisateur.getInfo() ) );
         ProfilEnum libelle = userProfilLibelle( utilisateur );
@@ -168,10 +147,10 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         utilisateurDto.setInfoUserDto( infoMapper.map( utilisateur.getInfo() ) );
         if ( utilisateur.getCreatedDate() != null ) {
-            utilisateurDto.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
+            utilisateurDto.setCreatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
         }
         if ( utilisateur.getUpdatedDate() != null ) {
-            utilisateurDto.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getUpdatedDate() ) );
+            utilisateurDto.setUpdatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getUpdatedDate() ) );
         }
         ProfilEnum libelle = userProfilLibelle( utilisateur );
         if ( libelle != null ) {
@@ -193,26 +172,14 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         Utilisateur utilisateur1 = new Utilisateur();
 
-        try {
-            if ( utilisateur.getCreatedDate() != null ) {
-                utilisateur1.setCreatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( utilisateur.getCreatedDate() ) );
-            }
+        if ( utilisateur.getCreatedDate() != null ) {
+            utilisateur1.setCreatedDate( java.time.LocalDateTime.parse( utilisateur.getCreatedDate(), DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) );
         }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
-        }
-        try {
-            if ( utilisateur.getUpdatedDate() != null ) {
-                utilisateur1.setUpdatedDate( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).parse( utilisateur.getUpdatedDate() ) );
-            }
-        }
-        catch ( ParseException e ) {
-            throw new RuntimeException( e );
+        if ( utilisateur.getUpdatedDate() != null ) {
+            utilisateur1.setUpdatedDate( java.time.LocalDateTime.parse( utilisateur.getUpdatedDate(), DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) );
         }
         utilisateur1.setInfo( infoMapper.map( utilisateur.getInfoUserDto() ) );
-        if ( utilisateur.getId() != null ) {
-            utilisateur1.setId( utilisateur.getId() );
-        }
+        utilisateur1.setId( utilisateur.getId() );
         utilisateur1.setMotDePasse( utilisateur.getMotDePasse() );
         utilisateur1.setActif( utilisateur.isActif() );
         utilisateur1.setProfil( profilEnumToProfil( utilisateur.getProfil() ) );

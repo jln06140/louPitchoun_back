@@ -23,15 +23,15 @@ public interface UtilisateurService {
 
 	EmployeDto createUtilisateurEmploye(EmployeDto employeDto);
 
-	List <Utilisateur> getAllUtilisateurs();
+	List <UtilisateurDto> getAllUtilisateurs();
 
 	List <Utilisateur> getAllUtilisateursParent();
 
-	Utilisateur getUtilisateur( Long id );
+	UtilisateurDto getUtilisateur( Long id );
 
-	Utilisateur updateUtilisateur( Utilisateur utilisateur);
+	UtilisateurDto updateUtilisateur( UtilisateurDto utilisateur);
 
-	void deleteUtilisateur( Utilisateur utilisateur);
+	void deleteUtilisateur( UtilisateurDto utilisateur);
 
 
 	/*Utilisateur getByLogAndPass(String log, String mdp) throws Exception;

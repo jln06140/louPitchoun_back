@@ -18,7 +18,7 @@ public class ParentDto {
 
 	private Long id;
 	@NotNull
-	private String login;
+	private String username;
 
 	@NotNull
 	private String motDePasse;
@@ -28,13 +28,15 @@ public class ParentDto {
 	private ProfilEnum profil;
 	private InfoParentDto infoParent;
 	private Set<Enfant> enfants;
-	
-	public String getLogin() {
-		return login;
+
+	public String getUsername() {
+		return username;
 	}
-	public void setLogin(String login) {
-		this.login = login;
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
+
 	public String getMotDePasse() {
 		return motDePasse;
 	}

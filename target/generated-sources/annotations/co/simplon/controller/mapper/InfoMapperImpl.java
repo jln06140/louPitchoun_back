@@ -34,6 +34,7 @@ public class InfoMapperImpl implements InfoMapper {
         infoUserDto.setFonction( info.getFonction() );
         infoUserDto.setTypeContrat( info.getTypeContrat() );
         infoUserDto.setMatricule( info.getMatricule() );
+        infoUserDto.setVille( info.getVille() );
 
         return infoUserDto;
     }
@@ -50,6 +51,7 @@ public class InfoMapperImpl implements InfoMapper {
         userInfo.setNom( infoUser.getNom() );
         userInfo.setPrenom( infoUser.getPrenom() );
         userInfo.setAdresse( infoUser.getAdresse() );
+        userInfo.setVille( infoUser.getVille() );
         userInfo.setEmail( infoUser.getEmail() );
         userInfo.setTelMobile( infoUser.getTelMobile() );
         userInfo.setTelPro( infoUser.getTelPro() );

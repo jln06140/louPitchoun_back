@@ -1,5 +1,6 @@
 package co.simplon.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public UtilisateurDto createUtilisateur(UtilisateurDto utilisateurDto) {
 		Utilisateur utilisateurToCreate = this.utilisateurMapper.map(utilisateurDto);
+		utilisateurToCreate.setCreatedDate(LocalDateTime.now());
 		utilisateurToCreate.setProfil(this.profilService.getProfilByLibelle(utilisateurDto.getProfil()));
 		return this.utilisateurMapper.map(this.utilisateurDao.save(utilisateurToCreate));
 
@@ -43,6 +45,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	public ParentDto createUtilisateurParent(ParentDto parentDto){
 		Utilisateur utilisateur = this.utilisateurMapper.ParentDtoToUtilisateur(parentDto);
+		utilisateur.setCreatedDate(LocalDateTime.now());
 		return this.utilisateurMapper.utilisateurToParentDto(this.utilisateurDao.save(utilisateur));
 	}
 
@@ -52,8 +55,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public List<Utilisateur> getAllUtilisateurs() {
-		return this.utilisateurDao.findAll();
+	public List<UtilisateurDto> getAllUtilisateurs() {
+		return this.utilisateurMapper.map(this.utilisateurDao.findAll());
 	}
 
 	@Override
@@ -65,20 +68,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 
 	@Override
-	public Utilisateur getUtilisateur(Long id) {
-		return this.utilisateurDao.findOne(id);
+	public UtilisateurDto getUtilisateur(Long id) {
+
+		return this.utilisateurMapper.map(this.utilisateurDao.findOne(id));
 	}
 
 	@Override
-	public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
+	public UtilisateurDto updateUtilisateur(UtilisateurDto utilisateur) {
 		//utilisateur.setUpdatedDate(LocalDateTime.now());
-		return this.utilisateurDao.save(utilisateur);
+		Utilisateur utilisateurToUpdate = this.utilisateurMapper.map(utilisateur);
+		return this.utilisateurMapper.map(this.utilisateurDao.save(utilisateurToUpdate));
 	}
 
 	@Override
-	public void deleteUtilisateur(Utilisateur utilisateur) {
-		this.utilisateurDao.delete(utilisateur);
-		
+	public void deleteUtilisateur(UtilisateurDto utilisateurDto) {
+		Utilisateur utilisateurToDelete = this.utilisateurMapper.map(utilisateurDto);
+		this.utilisateurDao.delete(utilisateurToDelete);
+
 	}
 
 

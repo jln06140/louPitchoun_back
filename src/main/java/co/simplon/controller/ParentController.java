@@ -74,24 +74,13 @@ public class ParentController{
 	 * mise a jour d'un parent
 	 */
 
-	@PutMapping("/parent/{id}")
+	@PutMapping("/{id}")
 	ResponseEntity<ParentDto> updateParent(@PathVariable(value = "id") Long id,@Valid @RequestBody ParentDto parent){
         ParentDto parentToUpdate = this.parentService.getParent(id);
 		if (parentToUpdate == null)
 			return ResponseEntity.notFound().build();
 
-		parentToUpdate.getInfoParent().setNom(parent.getInfoParent().getNom());
-//		parentToUpdate.setPrenom(parent.getPrenom());
-//		parentToUpdate.setDateDeNaissance(parent.getDateDeNaissance());
-//		parentToUpdate.setAdresse(parent.getAdresse());
-//		parentToUpdate.setAdressePro(parent.getAdressePro());
-//		parentToUpdate.setEmail(parent.getUsername());
-//		parentToUpdate.setTelFixe(parent.getTelFixe());
-//		parentToUpdate.setTelMobile(parent.getTelMobile());
-//		parentToUpdate.setTelPro(parent.getTelPro());
-
-
-        ParentDto parentUpdated = this.parentService.updateParent(parentToUpdate);
+        ParentDto parentUpdated = this.parentService.updateParent(parent);
 		return ResponseEntity.ok(parentUpdated);
 	}
 

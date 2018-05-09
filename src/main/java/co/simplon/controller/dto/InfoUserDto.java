@@ -16,6 +16,7 @@ public class InfoUserDto {
     private String nom;
     private String prenom;
     private String adresse;
+    private String ville;
     private String email;
     private String matricule;
     private String telMobile;
@@ -111,5 +112,13 @@ public class InfoUserDto {
 
     public void setMatricule(String matricule) {
         this.matricule = matricule;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
     }
 }

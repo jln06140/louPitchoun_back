@@ -61,7 +61,8 @@ public class UtilisateurController {
 	@GetMapping
 	@ApiOperation("Lecture de tous utilisateurs")
 	List<UtilisateurDto> getAllUtilisateur(){
-		return this.utilisateurMapper.map(this.utilisateurService.getAllUtilisateurs());
+		return this.utilisateurService.getAllUtilisateurs();
+
 	}
 
 	/*@GetMapping("/parents")
@@ -86,11 +87,10 @@ public class UtilisateurController {
 	@GetMapping("/{id}")
 	@ApiOperation("Lecture d'un utilisateur")
 	ResponseEntity<UtilisateurDto> getUtilisateurById (@PathVariable(value="id") long id){
-		Utilisateur utilisateur = this.utilisateurService.getUtilisateur(id);
-		UtilisateurDto utilisateurDto = this.utilisateurMapper.map(utilisateur);
+		UtilisateurDto utilisateur = this.utilisateurService.getUtilisateur(id);
 		if( utilisateur == null )
 			return ResponseEntity.notFound().build();
-		return ResponseEntity.ok().body(utilisateurDto);
+		return ResponseEntity.ok().body(utilisateur);
 	}
 	
 	/**
@@ -124,20 +124,12 @@ public class UtilisateurController {
 	 */
 	
 	@PutMapping("/{id}")
-	ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable(value = "id") Long id,@Valid @RequestBody Utilisateur utilisateur){
-		Utilisateur utilisateurToUpdate = this.utilisateurService.getUtilisateur(id);
+	ResponseEntity<UtilisateurDto> updateUtilisateur(@PathVariable(value = "id") Long id,@Valid @RequestBody Utilisateur utilisateur){
+		UtilisateurDto utilisateurToUpdate = this.utilisateurService.getUtilisateur(id);
 		if (utilisateurToUpdate == null)
 			return ResponseEntity.notFound().build();
-		
-		utilisateurToUpdate.setMotDePasse(utilisateur.getMotDePasse());
-		utilisateurToUpdate.setActif(utilisateur.isActif());
-		utilisateurToUpdate.setProfil(utilisateur.getProfil());
-		//utilisateurToUpdate.setInfo(utilisateur.getInfo());
-		
-		//TOdo
-		//relier profil et les infos
-		
-		Utilisateur utilisateurRet = this.utilisateurService.updateUtilisateur(utilisateurToUpdate);
+
+		UtilisateurDto utilisateurRet = this.utilisateurService.updateUtilisateur(utilisateurToUpdate);
 		return ResponseEntity.ok(utilisateurRet);
 	}
 	
@@ -148,8 +140,8 @@ public class UtilisateurController {
 	 */
 	
 	@DeleteMapping("/{id}")
-	ResponseEntity<Utilisateur> deleteUtilisateur(@PathVariable(value="id") Long id){
-		Utilisateur utilisateur = this.utilisateurService.getUtilisateur(id);
+	ResponseEntity<UtilisateurDto> deleteUtilisateur(@PathVariable(value="id") Long id){
+		UtilisateurDto utilisateur = this.utilisateurService.getUtilisateur(id);
 		if(utilisateur == null)
 			return ResponseEntity.notFound().build();
 		
