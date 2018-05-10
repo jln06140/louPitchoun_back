@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: co.simplon.LouPichounSpringApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.316 sec - in co.simplon.LouPichounSpringApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.31 sec - in co.simplon.LouPichounSpringApplicationTests

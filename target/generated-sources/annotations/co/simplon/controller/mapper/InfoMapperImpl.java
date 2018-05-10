@@ -74,14 +74,13 @@ public class InfoMapperImpl implements InfoMapper {
         if ( info.getDateEmbauche() != null ) {
             infoEmployeDto.setDateEmbauche( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( info.getDateEmbauche() ) );
         }
-        infoEmployeDto.setAdresse( info.getAdresse() );
-        infoEmployeDto.setVille( info.getVille() );
         infoEmployeDto.setEmail( info.getEmail() );
         infoEmployeDto.setFonction( info.getFonction() );
         infoEmployeDto.setTypeContrat( info.getTypeContrat() );
         infoEmployeDto.setMatricule( info.getMatricule() );
         infoEmployeDto.setNom( info.getNom() );
         infoEmployeDto.setPrenom( info.getPrenom() );
+        infoEmployeDto.setTelMobile( info.getTelMobile() );
 
         return infoEmployeDto;
     }
@@ -104,9 +103,8 @@ public class InfoMapperImpl implements InfoMapper {
         }
         userInfo.setNom( infoEmployeDto.getNom() );
         userInfo.setPrenom( infoEmployeDto.getPrenom() );
-        userInfo.setAdresse( infoEmployeDto.getAdresse() );
-        userInfo.setVille( infoEmployeDto.getVille() );
         userInfo.setEmail( infoEmployeDto.getEmail() );
+        userInfo.setTelMobile( infoEmployeDto.getTelMobile() );
         userInfo.setFonction( infoEmployeDto.getFonction() );
         userInfo.setTypeContrat( infoEmployeDto.getTypeContrat() );
         userInfo.setMatricule( infoEmployeDto.getMatricule() );

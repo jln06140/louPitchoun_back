@@ -9,8 +9,10 @@ import javax.validation.constraints.NotNull;
 @ApiModel("utilisateur employe")
 public class EmployeDto {
 
+    private Long id;
+
     @NotNull
-    private String login;
+    private String username;
 
     @NotNull
     private String motDePasse;
@@ -20,12 +22,20 @@ public class EmployeDto {
     private ProfilEnum profil;
     private InfoEmployeDto infoEmploye;
 
-    public String getLogin() {
-        return login;
+    public Long getId() {
+        return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getMotDePasse() {

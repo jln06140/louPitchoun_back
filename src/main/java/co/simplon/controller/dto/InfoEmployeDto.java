@@ -7,32 +7,15 @@ import javax.validation.constraints.NotNull;
 @ApiModel("info utilisateur employe")
 public class InfoEmployeDto {
 
-    private String nom;
-    private String prenom;
     @NotNull
     private String matricule;
-    private String adresse;
-    private String ville;
+    private String nom;
+    private String prenom;
     private String email;
+    private String telMobile;
     private String fonction;
     private String dateEmbauche;
     private String typeContrat;
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getVille() {
-        return ville;
-    }
-
-    public void setVille(String ville) {
-        this.ville = ville;
-    }
 
     public String getEmail() {
         return email;
@@ -88,5 +71,13 @@ public class InfoEmployeDto {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public String getTelMobile() {
+        return telMobile;
+    }
+
+    public void setTelMobile(String telMobile) {
+        this.telMobile = telMobile;
     }
 }

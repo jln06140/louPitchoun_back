@@ -26,6 +26,7 @@ co\simplon\service\ParentService.class
 co\simplon\model\Info.class
 co\simplon\model\Activite.class
 co\simplon\service\AuthenticationService.class
+co\simplon\controller\EmployeController.class
 co\simplon\service\InformationService.class
 co\simplon\model\Enfant.class
 co\simplon\service\impl\AuthenticationServiceImpl.class

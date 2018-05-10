@@ -105,9 +105,11 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
             utilisateur.setUpdatedDate( java.time.LocalDateTime.parse( employe.getUpdatedDate(), DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ) ) );
         }
         utilisateur.setInfo( infoMapper.infoToInfoEmployeDto( employe.getInfoEmploye() ) );
+        utilisateur.setId( employe.getId() );
         utilisateur.setMotDePasse( employe.getMotDePasse() );
         utilisateur.setActif( employe.isActif() );
         utilisateur.setProfil( profilEnumToProfil( employe.getProfil() ) );
+        utilisateur.setUsername( employe.getUsername() );
 
         return utilisateur;
     }
@@ -131,6 +133,8 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         if ( libelle != null ) {
             employeDto.setProfil( libelle );
         }
+        employeDto.setId( utilisateur.getId() );
+        employeDto.setUsername( utilisateur.getUsername() );
         employeDto.setMotDePasse( utilisateur.getMotDePasse() );
         employeDto.setActif( utilisateur.isActif() );
 

@@ -3,6 +3,7 @@ package co.simplon.service;
 import java.util.List;
 import java.util.Set;
 
+import co.simplon.controller.dto.EmployeDto;
 import co.simplon.model.Utilisateur;
 
 /**
@@ -14,10 +15,10 @@ import co.simplon.model.Utilisateur;
 
 public interface EmployeService {
 
-	Set<Utilisateur> getAllEmploye ();
-	Utilisateur addEmploye (Utilisateur employe);
-	Utilisateur getEmploye (Long id);
-	Utilisateur updateEmploye (Utilisateur employe);
-	void deleteEmploye (Utilisateur employe);
+	Set<EmployeDto> getAllEmploye ();
+	EmployeDto addEmploye (EmployeDto employe);
+	EmployeDto getEmploye (Long id);
+	EmployeDto updateEmploye (EmployeDto employe);
+	void deleteEmploye (EmployeDto employe);
 	
 }
