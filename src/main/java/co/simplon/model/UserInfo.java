@@ -105,4 +105,6 @@ public class UserInfo extends Info {
 	public void setMatricule(String matricule) {
 		this.matricule = matricule;
 	}
+
+
 }

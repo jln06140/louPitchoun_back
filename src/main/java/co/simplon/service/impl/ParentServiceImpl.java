@@ -7,6 +7,8 @@ import co.simplon.controller.dto.EmployeDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.mapper.UtilisateurMapper;
 import co.simplon.service.UtilisateurService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +28,8 @@ import co.simplon.service.ProfilService;
 @Service
 public class ParentServiceImpl implements ParentService{
 
+	private static final Logger logger = LogManager.getLogger(ParentServiceImpl.class);
+
 	@Autowired
 	private ParentDao parentDao;
 
@@ -43,6 +47,7 @@ public class ParentServiceImpl implements ParentService{
 
 	@Override
 	public Set<ParentDto> getAllParents() {
+		logger.info("recuperation du profil");
 		Profil profil = this.profilService.getProfilByLibelle(ProfilEnum.PARENT);
 
 		return this.utilisateurMapper.mapListUtilisateurToParentDto(this.parentDao.findByProfil(profil));
@@ -55,8 +60,9 @@ public class ParentServiceImpl implements ParentService{
 
 	@Override
 	public ParentDto getParent(Long id) {
-
-		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.findOne(id));
+		Utilisateur utilisateur = this.parentDao.findOne(id);
+		logger.info("recuperation du parent  : " + utilisateur.toString());
+		return this.utilisateurMapper.utilisateurToParentDto(utilisateur);
 	}
 
 	@Override

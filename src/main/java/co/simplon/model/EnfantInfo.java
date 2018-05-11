@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table ( name = " enfant_info")
 @PrimaryKeyJoinColumn (name = "id")
 public class EnfantInfo extends Info {
-	
+
 	@Column( name = "date_de_naissance")
 	private Date dateNaissance;
 	private String allergie;
@@ -43,6 +43,7 @@ public class EnfantInfo extends Info {
 	public void setBiberon(boolean biberon) {
 		this.biberon = biberon;
 	}
+
 	
 	
 

@@ -1,8 +1,10 @@
 package co.simplon.controller.mapper;
 
 import co.simplon.controller.dto.InfoEmployeDto;
+import co.simplon.controller.dto.InfoEnfantDto;
 import co.simplon.controller.dto.InfoParentDto;
 import co.simplon.controller.dto.InfoUserDto;
+import co.simplon.model.EnfantInfo;
 import co.simplon.model.UserInfo;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +26,7 @@ public class InfoMapperImpl implements InfoMapper {
         InfoUserDto infoUserDto = new InfoUserDto();
 
         infoUserDto.setDateEmbauche( info.getDateEmbauche() );
+        infoUserDto.setId( info.getId() );
         infoUserDto.setNom( info.getNom() );
         infoUserDto.setPrenom( info.getPrenom() );
         infoUserDto.setAdresse( info.getAdresse() );
@@ -48,6 +51,9 @@ public class InfoMapperImpl implements InfoMapper {
         UserInfo userInfo = new UserInfo();
 
         userInfo.setDateEmbauche( infoUser.getDateEmbauche() );
+        if ( infoUser.getId() != null ) {
+            userInfo.setId( infoUser.getId() );
+        }
         userInfo.setNom( infoUser.getNom() );
         userInfo.setPrenom( infoUser.getPrenom() );
         userInfo.setAdresse( infoUser.getAdresse() );
@@ -74,6 +80,7 @@ public class InfoMapperImpl implements InfoMapper {
         if ( info.getDateEmbauche() != null ) {
             infoEmployeDto.setDateEmbauche( new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" ).format( info.getDateEmbauche() ) );
         }
+        infoEmployeDto.setId( info.getId() );
         infoEmployeDto.setEmail( info.getEmail() );
         infoEmployeDto.setFonction( info.getFonction() );
         infoEmployeDto.setTypeContrat( info.getTypeContrat() );
@@ -101,6 +108,9 @@ public class InfoMapperImpl implements InfoMapper {
         catch ( ParseException e ) {
             throw new RuntimeException( e );
         }
+        if ( infoEmployeDto.getId() != null ) {
+            userInfo.setId( infoEmployeDto.getId() );
+        }
         userInfo.setNom( infoEmployeDto.getNom() );
         userInfo.setPrenom( infoEmployeDto.getPrenom() );
         userInfo.setEmail( infoEmployeDto.getEmail() );
@@ -120,6 +130,7 @@ public class InfoMapperImpl implements InfoMapper {
 
         InfoParentDto infoParentDto = new InfoParentDto();
 
+        infoParentDto.setId( info.getId() );
         infoParentDto.setAdresse( info.getAdresse() );
         infoParentDto.setVille( info.getVille() );
         infoParentDto.setEmail( info.getEmail() );
@@ -140,6 +151,9 @@ public class InfoMapperImpl implements InfoMapper {
 
         UserInfo userInfo = new UserInfo();
 
+        if ( infoParentDto.getId() != null ) {
+            userInfo.setId( infoParentDto.getId() );
+        }
         userInfo.setNom( infoParentDto.getNom() );
         userInfo.setPrenom( infoParentDto.getPrenom() );
         userInfo.setAdresse( infoParentDto.getAdresse() );
@@ -150,5 +164,43 @@ public class InfoMapperImpl implements InfoMapper {
         userInfo.setTelFixe( infoParentDto.getTelFixe() );
 
         return userInfo;
+    }
+
+    @Override
+    public InfoEnfantDto enfantInfoToInfoEnfantDto(EnfantInfo enfantInfo) {
+        if ( enfantInfo == null ) {
+            return null;
+        }
+
+        InfoEnfantDto infoEnfantDto = new InfoEnfantDto();
+
+        infoEnfantDto.setId( enfantInfo.getId() );
+        if ( enfantInfo.getAllergie() != null ) {
+            infoEnfantDto.setAllergie( Boolean.parseBoolean( enfantInfo.getAllergie() ) );
+        }
+        if ( enfantInfo.getMaladie() != null ) {
+            infoEnfantDto.setMaladie( Boolean.parseBoolean( enfantInfo.getMaladie() ) );
+        }
+        infoEnfantDto.setBiberon( enfantInfo.isBiberon() );
+
+        return infoEnfantDto;
+    }
+
+    @Override
+    public EnfantInfo infoEnfantDtoToEnfantInfo(InfoEnfantDto infoEnfantDto) {
+        if ( infoEnfantDto == null ) {
+            return null;
+        }
+
+        EnfantInfo enfantInfo = new EnfantInfo();
+
+        if ( infoEnfantDto.getId() != null ) {
+            enfantInfo.setId( infoEnfantDto.getId() );
+        }
+        enfantInfo.setAllergie( String.valueOf( infoEnfantDto.isAllergie() ) );
+        enfantInfo.setMaladie( String.valueOf( infoEnfantDto.isMaladie() ) );
+        enfantInfo.setBiberon( infoEnfantDto.isBiberon() );
+
+        return enfantInfo;
     }
 }

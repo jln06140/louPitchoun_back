@@ -37,5 +37,12 @@ public abstract class Info {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Info{" +
+				" nom='" + nom + '\'' +
+				", prenom='" + prenom + '\'' +
+				'}';
+	}
 }

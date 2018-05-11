@@ -47,9 +47,9 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         parentDto.setUsername( user.getUsername() );
         parentDto.setMotDePasse( user.getMotDePasse() );
         parentDto.setActif( user.isActif() );
-        Set<Enfant> set = user.getEnfants();
-        if ( set != null ) {
-            parentDto.setEnfants( new HashSet<Enfant>( set ) );
+        List<Enfant> list = user.getEnfants();
+        if ( list != null ) {
+            parentDto.setEnfants( new HashSet<Enfant>( list ) );
         }
         else {
             parentDto.setEnfants( null );
@@ -80,7 +80,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         utilisateur.setProfil( profilEnumToProfil( parent.getProfil() ) );
         Set<Enfant> set = parent.getEnfants();
         if ( set != null ) {
-            utilisateur.setEnfants( new HashSet<Enfant>( set ) );
+            utilisateur.setEnfants( new ArrayList<Enfant>( set ) );
         }
         else {
             utilisateur.setEnfants( null );
@@ -201,6 +201,20 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         List<UtilisateurDto> list = new ArrayList<UtilisateurDto>( utilisateurs.size() );
         for ( Utilisateur utilisateur : utilisateurs ) {
             list.add( map( utilisateur ) );
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs) {
+        if ( utilisateurs == null ) {
+            return null;
+        }
+
+        List<ParentDto> list = new ArrayList<ParentDto>( utilisateurs.size() );
+        for ( Utilisateur utilisateur : utilisateurs ) {
+            list.add( utilisateurToParentDto( utilisateur ) );
         }
 
         return list;

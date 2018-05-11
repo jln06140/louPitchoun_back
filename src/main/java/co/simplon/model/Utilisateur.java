@@ -2,6 +2,7 @@ package co.simplon.model;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -45,9 +46,9 @@ public class Utilisateur {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "parent_enfant",
-            joinColumns = {@JoinColumn(name = "parent_id")},
+            joinColumns = {@JoinColumn(name = "geniteur_id")},
             inverseJoinColumns = {@JoinColumn(name = "enfant_id")})
-    private Set<Enfant> enfants;
+    private List<Enfant> enfants;
 
     @CreatedDate
     @Column(name = "created_date")
@@ -96,11 +97,11 @@ public class Utilisateur {
         this.info = info;
     }
 
-    public Set<Enfant> getEnfants() {
+    public List<Enfant> getEnfants() {
         return enfants;
     }
 
-    public void setEnfants(Set<Enfant> enfants) {
+    public void setEnfants(List<Enfant> enfants) {
         this.enfants = enfants;
     }
 
@@ -132,5 +133,16 @@ public class Utilisateur {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Utilisateur{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", profil=" + profil +
+                ", info=" + info +
+                ", enfants=" + enfants +
+                '}';
     }
 }

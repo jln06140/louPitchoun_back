@@ -10,6 +10,8 @@ import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.dto.UtilisateurDto;
 import co.simplon.controller.mapper.UtilisateurMapper;
 import co.simplon.service.ProfilService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import co.simplon.service.UtilisateurService;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
+
+	private static final Logger logger = LogManager.getLogger(UtilisateurServiceImpl.class);
 
 	@Autowired
 	private ProfilService profilService;
@@ -56,6 +60,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public List<UtilisateurDto> getAllUtilisateurs() {
+		logger.info("recuperation des utilisateurs");
 		return this.utilisateurMapper.map(this.utilisateurDao.findAll());
 	}
 
@@ -69,8 +74,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
 	@Override
 	public UtilisateurDto getUtilisateur(Long id) {
-
-		return this.utilisateurMapper.map(this.utilisateurDao.findOne(id));
+		Utilisateur utilisateur = this.utilisateurDao.findOne(id);
+		logger.info("recuperation utilisateur : " + utilisateur.getInfo().getPrenom());
+		return this.utilisateurMapper.map(utilisateur);
 	}
 
 	@Override

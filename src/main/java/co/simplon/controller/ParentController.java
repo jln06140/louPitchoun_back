@@ -61,7 +61,6 @@ public class ParentController{
 	 * @return
 	 * creation et ajout d'un nouveau parent
 	 */
-
 	@PostMapping
     ParentDto addParent(@Valid @RequestBody ParentDto parent) {
 		return this.parentService.createUtilisateurParent(parent);
@@ -90,7 +89,7 @@ public class ParentController{
 	 * @suppression d'un parent
 	 */
 
-	@DeleteMapping("/parent/{id}")
+	@DeleteMapping("/{id}")
 	ResponseEntity<ParentDto> deleteParent(@PathVariable(value="id") Long id){
         ParentDto parent = this.parentService.getParent(id);
 			if(parent == null)

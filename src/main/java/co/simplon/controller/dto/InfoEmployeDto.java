@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel("info utilisateur employe")
 public class InfoEmployeDto {
 
+    private Long id;
     @NotNull
     private String matricule;
     private String nom;
@@ -16,6 +17,14 @@ public class InfoEmployeDto {
     private String fonction;
     private String dateEmbauche;
     private String typeContrat;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;

@@ -13,6 +13,7 @@ import java.util.Date;
 @ApiModel("info utilisateur")
 public class InfoUserDto {
 
+    private Long id;
     private String nom;
     private String prenom;
     private String adresse;
@@ -25,6 +26,14 @@ public class InfoUserDto {
     private String fonction;
     private Date dateEmbauche;
     private String typeContrat;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;

@@ -1,5 +1,7 @@
+co\simplon\controller\mapper\EnfantMapper.class
 co\simplon\controller\dto\EmployeDto.class
 co\simplon\config\SwaggerConfiguration.class
+co\simplon\controller\dto\InfoEnfantDto.class
 co\simplon\controller\InformationController.class
 co\simplon\service\EmployeService.class
 co\simplon\service\UtilisateurService.class
@@ -21,6 +23,8 @@ co\simplon\controller\mapper\InfoMapper.class
 co\simplon\service\impl\ParentServiceImpl.class
 co\simplon\exception\PitchounException.class
 co\simplon\model\Section.class
+co\simplon\service\EnfantService.class
+co\simplon\controller\mapper\EnfantMapperImpl.class
 co\simplon\controller\AuthController.class
 co\simplon\service\ParentService.class
 co\simplon\model\Info.class
@@ -34,6 +38,7 @@ co\simplon\service\impl\EmployeServiceImpl.class
 co\simplon\model\Utilisateur.class
 co\simplon\config\GlobalControllerExceptionHandler.class
 co\simplon\controller\dto\LoginDto.class
+co\simplon\dao\EnfantDao.class
 co\simplon\service\JwtTokenService.class
 co\simplon\security\JwtAuthenticationTokenFilter.class
 co\simplon\enums\SectionEnum.class
@@ -41,12 +46,15 @@ co\simplon\model\UserInfo.class
 co\simplon\config\WebConfiguration$1.class
 co\simplon\controller\ProfilController.class
 co\simplon\model\EnfantInfo.class
+co\simplon\controller\dto\EnfantDto.class
 co\simplon\controller\dto\InfoUserDto.class
 co\simplon\config\SecurityConfiguration.class
 co\simplon\config\WebConfiguration.class
 co\simplon\controller\UtilisateurController.class
 co\simplon\enums\ProfilEnum.class
 co\simplon\service\impl\UserDetailsServiceImpl.class
+co\simplon\controller\EnfantController.class
+co\simplon\service\impl\EnfantServiceImpl.class
 co\simplon\controller\dto\InfoParentDto.class
 co\simplon\dao\UtilisateurDao.class
 co\simplon\config\WebConfiguration$1$1.class

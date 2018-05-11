@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 @ApiModel("info utilisateur parent")
 public class InfoParentDto {
 
+    private Long id;
+
     private String nom;
     private String prenom;
     private String adresse;
@@ -17,6 +19,14 @@ public class InfoParentDto {
     private String telMobile;
     private String telPro;
     private String telFixe;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAdresse() {
         return adresse;

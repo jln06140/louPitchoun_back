@@ -1,8 +1,10 @@
 package co.simplon.controller.mapper;
 
 import co.simplon.controller.dto.InfoEmployeDto;
+import co.simplon.controller.dto.InfoEnfantDto;
 import co.simplon.controller.dto.InfoParentDto;
 import co.simplon.controller.dto.InfoUserDto;
+import co.simplon.model.EnfantInfo;
 import co.simplon.model.Info;
 import co.simplon.model.UserInfo;
 import org.mapstruct.Mapper;
@@ -40,4 +42,7 @@ public interface InfoMapper {
 
     UserInfo infoToInfoParentDto(InfoParentDto infoParentDto);
 
+    InfoEnfantDto enfantInfoToInfoEnfantDto (EnfantInfo enfantInfo);
+
+    EnfantInfo infoEnfantDtoToEnfantInfo (InfoEnfantDto infoEnfantDto);
 }
