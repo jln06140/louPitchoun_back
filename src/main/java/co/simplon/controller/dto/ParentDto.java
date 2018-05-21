@@ -1,6 +1,7 @@
 package co.simplon.controller.dto;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
@@ -27,7 +28,7 @@ public class ParentDto {
 	private String updatedDate;
 	private ProfilEnum profil;
 	private InfoParentDto infoParent;
-	private Set<Enfant> enfants;
+	private List<EnfantDto> enfants;
 
 	public String getUsername() {
 		return username;
@@ -60,11 +61,11 @@ public class ParentDto {
 		this.actif = actif;
 	}
 
-	public Set<Enfant> getEnfants() {
+	public List<EnfantDto> getEnfants() {
 		return enfants;
 	}
 
-	public void setEnfants(Set<Enfant> enfants) {
+	public void setEnfants(List<EnfantDto> enfants) {
 		this.enfants = enfants;
 	}
 

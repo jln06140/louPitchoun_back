@@ -1,8 +1,11 @@
 package co.simplon.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.rmi.CORBA.Util;
 import javax.validation.Valid;
 
 import bzh.tibus29.spring.metrik.Metrik;
@@ -14,15 +17,7 @@ import co.simplon.controller.mapper.UtilisateurMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.model.Utilisateur;
@@ -91,6 +86,19 @@ public class UtilisateurController {
 		if( utilisateur == null )
 			return ResponseEntity.notFound().build();
 		return ResponseEntity.ok().body(utilisateur);
+	}
+
+	@GetMapping("login")
+	ResponseEntity<Object> getUtilisateurByusernameAndMdp(@RequestParam("log") String username,
+															   @RequestParam("mdp") String motDePasse) throws Exception {
+		try {
+			Utilisateur utilisateurReturn = this.utilisateurService.getUtilisateurByUsernameAndMdp(username, motDePasse);
+			return ResponseEntity.ok().body(utilisateurReturn);
+		}catch(Exception e){
+			Map<String,String> resultMap = new HashMap<>();
+			resultMap.put("message","Utilisateur inexistant");
+			return ResponseEntity.badRequest().body(resultMap);
+		}
 	}
 	
 	/**

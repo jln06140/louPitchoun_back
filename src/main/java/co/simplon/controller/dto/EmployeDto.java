@@ -1,6 +1,7 @@
 package co.simplon.controller.dto;
 
 import co.simplon.enums.ProfilEnum;
+import co.simplon.enums.SectionEnum;
 import co.simplon.model.Profil;
 import io.swagger.annotations.ApiModel;
 
@@ -20,6 +21,7 @@ public class EmployeDto {
     private String createdDate;
     private String updatedDate;
     private ProfilEnum profil;
+    private SectionEnum section;
     private InfoEmployeDto infoEmploye;
 
     public Long getId() {
@@ -84,5 +86,13 @@ public class EmployeDto {
 
     public void setInfoEmploye(InfoEmployeDto infoEmploye) {
         this.infoEmploye = infoEmploye;
+    }
+
+    public SectionEnum getSection() {
+        return section;
+    }
+
+    public void setSection(SectionEnum section) {
+        this.section = section;
     }
 }

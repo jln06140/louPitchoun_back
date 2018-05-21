@@ -13,7 +13,7 @@ import org.mapstruct.Mappings;
 import java.util.List;
 import java.util.Set;
 
-@Mapper(uses=InfoMapper.class)
+@Mapper(uses= {InfoMapper.class, EnfantMapper.class})
 public interface UtilisateurMapper {
 
     @Mappings({
@@ -25,6 +25,7 @@ public interface UtilisateurMapper {
                     dateFormat = "dd-MM-yyyy HH:mm:ss")
     })
     ParentDto utilisateurToParentDto(Utilisateur user);
+
 
     @Mappings({
             @Mapping(target = "info", source= "parent.infoParent"),
@@ -46,6 +47,7 @@ public interface UtilisateurMapper {
 
     @Mappings({
             @Mapping(target = "infoEmploye", source= "utilisateur.info"),
+            @Mapping(target = "section", source = "section.nom"),
             @Mapping(target = "profil", source = "profil.libelle"),
             @Mapping(target="createdDate", source = "utilisateur.createdDate",
                     dateFormat = "dd-MM-yyyy HH:mm:ss"),

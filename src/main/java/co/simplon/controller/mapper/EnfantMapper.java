@@ -14,12 +14,14 @@ public interface EnfantMapper {
 
 
     @Mappings({
+           @Mapping(target = "section", source = "section.nom"),
            @Mapping(target="createdDate", source = "enfant.createdDate",
                     dateFormat = "dd-MM-yyyy HH:mm:ss"),
     })
     EnfantDto enfantToEnfantDto(Enfant enfant);
 
     @Mappings({
+
             @Mapping(target="createdDate", source = "enfantDto.createdDate",
                     dateFormat = "dd-MM-yyyy HH:mm:ss"),
     })

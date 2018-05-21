@@ -44,5 +44,9 @@ public interface InfoMapper {
 
     InfoEnfantDto enfantInfoToInfoEnfantDto (EnfantInfo enfantInfo);
 
+    @Mappings({
+            @Mapping(target = "dateDeNaissance", source = "infoEnfantDto.dateDeNaissance",
+                    dateFormat = "dd-MM-yyyy"),
+    })
     EnfantInfo infoEnfantDtoToEnfantInfo (InfoEnfantDto infoEnfantDto);
 }

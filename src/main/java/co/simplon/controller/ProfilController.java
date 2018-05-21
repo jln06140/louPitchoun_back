@@ -31,4 +31,9 @@ public class ProfilController {
 	Profil getProfilByLibelle(@PathVariable (value = "libelle") String libelle) {
 		return this.profilService.getProfilByLibelle(ProfilEnum.valueOf(libelle.toUpperCase()));
 	}
+
+	@GetMapping("libelles")
+	List<String> getAllLibellesProfils(){
+		return this.profilService.getAllLibelleProfils();
+	}
 }

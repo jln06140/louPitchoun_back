@@ -4,8 +4,9 @@ import co.simplon.controller.dto.EmployeDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.dto.UtilisateurDto;
 import co.simplon.enums.ProfilEnum;
-import co.simplon.model.Enfant;
+import co.simplon.enums.SectionEnum;
 import co.simplon.model.Profil;
+import co.simplon.model.Section;
 import co.simplon.model.Utilisateur;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
     @Autowired
     private InfoMapper infoMapper;
+    @Autowired
+    private EnfantMapper enfantMapper;
 
     @Override
     public ParentDto utilisateurToParentDto(Utilisateur user) {
@@ -47,13 +50,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         parentDto.setUsername( user.getUsername() );
         parentDto.setMotDePasse( user.getMotDePasse() );
         parentDto.setActif( user.isActif() );
-        List<Enfant> list = user.getEnfants();
-        if ( list != null ) {
-            parentDto.setEnfants( new HashSet<Enfant>( list ) );
-        }
-        else {
-            parentDto.setEnfants( null );
-        }
+        parentDto.setEnfants( enfantMapper.listEnfantToEnfantDto( user.getEnfants() ) );
         parentDto.setId( user.getId() );
 
         return parentDto;
@@ -78,13 +75,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         utilisateur.setMotDePasse( parent.getMotDePasse() );
         utilisateur.setActif( parent.isActif() );
         utilisateur.setProfil( profilEnumToProfil( parent.getProfil() ) );
-        Set<Enfant> set = parent.getEnfants();
-        if ( set != null ) {
-            utilisateur.setEnfants( new ArrayList<Enfant>( set ) );
-        }
-        else {
-            utilisateur.setEnfants( null );
-        }
+        utilisateur.setEnfants( enfantMapper.listEnfantDtoToEnfant( parent.getEnfants() ) );
         utilisateur.setUsername( parent.getUsername() );
 
         return utilisateur;
@@ -109,6 +100,7 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         utilisateur.setMotDePasse( employe.getMotDePasse() );
         utilisateur.setActif( employe.isActif() );
         utilisateur.setProfil( profilEnumToProfil( employe.getProfil() ) );
+        utilisateur.setSection( sectionEnumToSection( employe.getSection() ) );
         utilisateur.setUsername( employe.getUsername() );
 
         return utilisateur;
@@ -122,6 +114,10 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         EmployeDto employeDto = new EmployeDto();
 
+        SectionEnum nom = utilisateurSectionNom( utilisateur );
+        if ( nom != null ) {
+            employeDto.setSection( nom );
+        }
         if ( utilisateur.getCreatedDate() != null ) {
             employeDto.setCreatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
         }
@@ -271,5 +267,30 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         Profil profil = new Profil();
 
         return profil;
+    }
+
+    protected Section sectionEnumToSection(SectionEnum sectionEnum) {
+        if ( sectionEnum == null ) {
+            return null;
+        }
+
+        Section section = new Section();
+
+        return section;
+    }
+
+    private SectionEnum utilisateurSectionNom(Utilisateur utilisateur) {
+        if ( utilisateur == null ) {
+            return null;
+        }
+        Section section = utilisateur.getSection();
+        if ( section == null ) {
+            return null;
+        }
+        SectionEnum nom = section.getNom();
+        if ( nom == null ) {
+            return null;
+        }
+        return nom;
     }
 }

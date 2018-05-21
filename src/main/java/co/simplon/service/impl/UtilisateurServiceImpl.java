@@ -50,6 +50,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public ParentDto createUtilisateurParent(ParentDto parentDto){
 		Utilisateur utilisateur = this.utilisateurMapper.ParentDtoToUtilisateur(parentDto);
 		utilisateur.setCreatedDate(LocalDateTime.now());
+		utilisateur.setProfil(this.profilService.getProfilByLibelle(parentDto.getProfil()));
+
 		return this.utilisateurMapper.utilisateurToParentDto(this.utilisateurDao.save(utilisateur));
 	}
 
@@ -83,6 +85,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public UtilisateurDto updateUtilisateur(UtilisateurDto utilisateur) {
 		//utilisateur.setUpdatedDate(LocalDateTime.now());
 		Utilisateur utilisateurToUpdate = this.utilisateurMapper.map(utilisateur);
+		utilisateurToUpdate.setUpdatedDate(LocalDateTime.now());
 		return this.utilisateurMapper.map(this.utilisateurDao.save(utilisateurToUpdate));
 	}
 
@@ -90,6 +93,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void deleteUtilisateur(UtilisateurDto utilisateurDto) {
 		Utilisateur utilisateurToDelete = this.utilisateurMapper.map(utilisateurDto);
 		this.utilisateurDao.delete(utilisateurToDelete);
+
+	}
+
+	@Override
+	public Utilisateur getUtilisateurByUsernameAndMdp(String username, String motDePasse) throws Exception {
+		Utilisateur utilisateur = this.utilisateurDao.findByUsername(username);
+		if(utilisateur == null){
+			throw new Exception("utilisateur non trouve");
+			//// TODO: 18/05/2018 cather l'erreur pour remonter l'erreur au front
+		}
+
+		if(passwordEncoder.matches(motDePasse,utilisateur.getMotDePasse())){
+			return utilisateur;
+		}else{
+			throw new Exception("Utilisateur n'existe pas");
+		}
 
 	}
 

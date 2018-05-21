@@ -1,17 +1,14 @@
 package co.simplon.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import co.simplon.enums.SectionEnum;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Section {
@@ -26,13 +23,14 @@ public class Section {
 	private String email;
 	private String annee;
 	
-	@OneToMany
-	@JoinColumn ( name = "id_employe")
-	private Set<Utilisateur> employes;
+	@OneToMany(mappedBy = "section")
+	@JsonManagedReference
+	private List<Utilisateur> employes = new ArrayList<>();
 	
-	@OneToMany
-	@JoinColumn ( name = "id_enfant")
-	private Set<Enfant> enfants;
+	@OneToMany(mappedBy="section",
+			cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<Enfant> enfants = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -58,13 +56,6 @@ public class Section {
 		this.annee = annee;
 	}
 
-	public Set<Enfant> getEnfants() {
-		return enfants;
-	}
-
-	public void setEnfants(Set<Enfant> enfants) {
-		this.enfants = enfants;
-	}
 
 	public String getEmail() {
 		return email;
@@ -74,13 +65,20 @@ public class Section {
 		this.email = email;
 	}
 
-	public Set<Utilisateur> getEmployes() {
+	public List<Utilisateur> getEmployes() {
 		return employes;
 	}
 
-	public void setEmployes(Set<Utilisateur> employes) {
+	public void setEmployes(List<Utilisateur> employes) {
+
 		this.employes = employes;
 	}
-	
-	
+
+	public List<Enfant> getEnfants() {
+		return enfants;
+	}
+
+	public void setEnfants(List<Enfant> enfants) {
+		this.enfants = enfants;
+	}
 }

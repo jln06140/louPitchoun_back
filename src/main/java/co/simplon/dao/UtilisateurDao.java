@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface UtilisateurDao extends JpaRepository<Utilisateur, Long>{
 
+    Utilisateur findByUsername(String userName);
 }

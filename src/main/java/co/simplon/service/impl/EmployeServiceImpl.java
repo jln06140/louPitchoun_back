@@ -1,14 +1,19 @@
 package co.simplon.service.impl;
 
+import co.simplon.Utils.UtilsUtilisateur;
 import co.simplon.controller.dto.EmployeDto;
 import co.simplon.controller.mapper.UtilisateurMapper;
 import co.simplon.dao.EmployeDao;
 import co.simplon.enums.ProfilEnum;
+import co.simplon.exception.MotDePasseException;
 import co.simplon.model.Profil;
 import co.simplon.model.Utilisateur;
 import co.simplon.service.EmployeService;
 import co.simplon.service.ProfilService;
+import co.simplon.service.SectionService;
 import co.simplon.service.UtilisateurService;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,11 +24,16 @@ import java.util.Set;
 @Service
 public class EmployeServiceImpl implements EmployeService {
 
+    private static final Logger logger = LogManager.getLogger(EmployeServiceImpl.class);
+
     @Autowired
     private EmployeDao daoEmploye;
 
     @Autowired
     private ProfilService profilService;
+
+    @Autowired
+    private SectionService sectionService;
 
     @Autowired
     private UtilisateurMapper utilisateurMapper;
@@ -41,8 +51,17 @@ public class EmployeServiceImpl implements EmployeService {
     }
 
     @Override
-    public EmployeDto addEmploye(EmployeDto employe) {
+    public EmployeDto addEmploye(EmployeDto employe) throws MotDePasseException {
+        logger.info("creation d'un utilisateur : employe");
+        //mapping employe en utilisateur
         Utilisateur utilisateur = this.utilisateurMapper.mapEmploye(employe);
+        utilisateur.setCreatedDate(LocalDateTime.now());
+
+        //encodage mot de passe
+        UtilsUtilisateur.encodeMdp(employe.getMotDePasse(),utilisateur,passwordEncoder);
+
+        utilisateur.setProfil(this.profilService.getProfilByLibelle(employe.getProfil()));
+        utilisateur.setSection(this.sectionService.getSectionByNom(employe.getSection()));
         return this.utilisateurMapper.mapEmploye(this.daoEmploye.save(utilisateur));
     }
 
@@ -64,6 +83,7 @@ public class EmployeServiceImpl implements EmployeService {
             utilisateur.setMotDePasse(NewMotDePasse);
         }
 
+
         utilisateur.setInfo(utilisateurUpdated.getInfo());
 
         //en cas de changement de matricule, change egalement le username
@@ -74,6 +94,7 @@ public class EmployeServiceImpl implements EmployeService {
 
         //recuperation du profil
         utilisateur.setProfil(this.profilService.getProfilByLibelle(employe.getProfil()));
+        utilisateur.setSection(this.sectionService.getSectionByNom(employe.getSection()));
 
         //mise a jour de la date de moddification
         utilisateur.setUpdatedDate(LocalDateTime.now());

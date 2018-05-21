@@ -1,4 +1,5 @@
 co\simplon\controller\mapper\EnfantMapper.class
+co\simplon\service\impl\SectionServiceImpl.class
 co\simplon\controller\dto\EmployeDto.class
 co\simplon\config\SwaggerConfiguration.class
 co\simplon\controller\dto\InfoEnfantDto.class
@@ -7,6 +8,7 @@ co\simplon\service\EmployeService.class
 co\simplon\service\UtilisateurService.class
 co\simplon\dao\ProfilDao.class
 co\simplon\controller\dto\ParentDto.class
+co\simplon\dao\JourneeEnfantDao.class
 co\simplon\service\impl\UtilisateurServiceImpl.class
 co\simplon\service\impl\JwtTokenServiceImpl.class
 co\simplon\controller\mapper\UtilisateurMapper.class
@@ -14,17 +16,21 @@ co\simplon\enums\ActiviteEnum.class
 co\simplon\LouPichounSpringApplication.class
 co\simplon\controller\dto\UtilisateurDto.class
 co\simplon\dao\ParentDao.class
+co\simplon\dao\SectionDao.class
 co\simplon\controller\dto\InfoEmployeDto.class
 co\simplon\controller\mapper\UtilisateurMapperImpl.class
 co\simplon\model\Profil.class
 co\simplon\service\impl\ProfilServiceImpl.class
 co\simplon\service\impl\InformationServiceImpl.class
 co\simplon\controller\mapper\InfoMapper.class
+co\simplon\controller\SectionController.class
 co\simplon\service\impl\ParentServiceImpl.class
 co\simplon\exception\PitchounException.class
 co\simplon\model\Section.class
+co\simplon\exception\MotDePasseException.class
 co\simplon\service\EnfantService.class
 co\simplon\controller\mapper\EnfantMapperImpl.class
+co\simplon\service\impl\JourneeEnfantServiceImpl.class
 co\simplon\controller\AuthController.class
 co\simplon\service\ParentService.class
 co\simplon\model\Info.class
@@ -37,6 +43,9 @@ co\simplon\service\impl\AuthenticationServiceImpl.class
 co\simplon\service\impl\EmployeServiceImpl.class
 co\simplon\model\Utilisateur.class
 co\simplon\config\GlobalControllerExceptionHandler.class
+co\simplon\service\SectionService.class
+co\simplon\controller\JourneeEnfantController.class
+co\simplon\service\JourneeEnfantService.class
 co\simplon\controller\dto\LoginDto.class
 co\simplon\dao\EnfantDao.class
 co\simplon\service\JwtTokenService.class
@@ -61,6 +70,7 @@ co\simplon\config\WebConfiguration$1$1.class
 co\simplon\controller\dto\UserDto.class
 co\simplon\service\ProfilService.class
 co\simplon\controller\mapper\InfoMapperImpl.class
+co\simplon\Utils\UtilsUtilisateur.class
 co\simplon\controller\dto\JwtDto.class
 co\simplon\exception\PitchounErrorEnum.class
 co\simplon\model\TypeActivite.class

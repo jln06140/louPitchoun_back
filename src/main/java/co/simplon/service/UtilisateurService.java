@@ -33,6 +33,8 @@ public interface UtilisateurService {
 
 	void deleteUtilisateur( UtilisateurDto utilisateur);
 
+	Utilisateur getUtilisateurByUsernameAndMdp(String username, String motDePasse) throws Exception;
+
 
 	/*Utilisateur getByLogAndPass(String log, String mdp) throws Exception;
 

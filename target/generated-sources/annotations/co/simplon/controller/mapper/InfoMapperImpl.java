@@ -175,12 +175,11 @@ public class InfoMapperImpl implements InfoMapper {
         InfoEnfantDto infoEnfantDto = new InfoEnfantDto();
 
         infoEnfantDto.setId( enfantInfo.getId() );
-        if ( enfantInfo.getAllergie() != null ) {
-            infoEnfantDto.setAllergie( Boolean.parseBoolean( enfantInfo.getAllergie() ) );
-        }
-        if ( enfantInfo.getMaladie() != null ) {
-            infoEnfantDto.setMaladie( Boolean.parseBoolean( enfantInfo.getMaladie() ) );
-        }
+        infoEnfantDto.setNom( enfantInfo.getNom() );
+        infoEnfantDto.setPrenom( enfantInfo.getPrenom() );
+        infoEnfantDto.setDateDeNaissance( enfantInfo.getDateDeNaissance() );
+        infoEnfantDto.setAllergie( enfantInfo.isAllergie() );
+        infoEnfantDto.setMaladie( enfantInfo.isMaladie() );
         infoEnfantDto.setBiberon( enfantInfo.isBiberon() );
 
         return infoEnfantDto;
@@ -194,11 +193,14 @@ public class InfoMapperImpl implements InfoMapper {
 
         EnfantInfo enfantInfo = new EnfantInfo();
 
+        enfantInfo.setDateDeNaissance( infoEnfantDto.getDateDeNaissance() );
         if ( infoEnfantDto.getId() != null ) {
             enfantInfo.setId( infoEnfantDto.getId() );
         }
-        enfantInfo.setAllergie( String.valueOf( infoEnfantDto.isAllergie() ) );
-        enfantInfo.setMaladie( String.valueOf( infoEnfantDto.isMaladie() ) );
+        enfantInfo.setNom( infoEnfantDto.getNom() );
+        enfantInfo.setPrenom( infoEnfantDto.getPrenom() );
+        enfantInfo.setAllergie( infoEnfantDto.isAllergie() );
+        enfantInfo.setMaladie( infoEnfantDto.isMaladie() );
         enfantInfo.setBiberon( infoEnfantDto.isBiberon() );
 
         return enfantInfo;

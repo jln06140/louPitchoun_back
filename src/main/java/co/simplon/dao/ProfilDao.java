@@ -12,5 +12,7 @@ import co.simplon.model.Profil;
 public interface ProfilDao extends JpaRepository<Profil, Long>{
 
 	List<Profil> findByLibelle(ProfilEnum libelle);
+
+
 }
 

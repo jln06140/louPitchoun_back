@@ -8,6 +8,8 @@ import java.util.Date;
 public class InfoEnfantDto {
 
     private Long id;
+    private String nom;
+    private String prenom;
     private Date dateDeNaissance;
     private boolean allergie;
     private boolean maladie;
@@ -19,6 +21,22 @@ public class InfoEnfantDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
     }
 
     public Date getDateDeNaissance() {

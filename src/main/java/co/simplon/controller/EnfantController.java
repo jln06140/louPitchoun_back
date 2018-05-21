@@ -3,6 +3,7 @@ package co.simplon.controller;
 import co.simplon.controller.dto.EnfantDto;
 import co.simplon.model.Enfant;
 import co.simplon.service.EnfantService;
+import co.simplon.service.SectionService;
 import co.simplon.service.impl.UtilisateurServiceImpl;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -28,6 +29,8 @@ public class EnfantController {
 
     @Autowired
     private EnfantService enfantService;
+
+
 
     /**
      * @return
@@ -71,7 +74,7 @@ public class EnfantController {
      * @return
      */
     @PutMapping("/{id}")
-    ResponseEntity<EnfantDto> updateParent(@PathVariable(value = "id") Long id,@Valid @RequestBody EnfantDto enfant){
+    ResponseEntity<EnfantDto> updateEnfant(@PathVariable(value = "id") Long id,@Valid @RequestBody EnfantDto enfant){
         EnfantDto enfantToUpdate = this.enfantService.getEnfant(id);
         if (enfantToUpdate == null) {
             logger.error("Enfant introuvable dans la base de donnée");
@@ -81,8 +84,13 @@ public class EnfantController {
         return ResponseEntity.ok(enfantUpdated);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/{id}")
-    ResponseEntity<EnfantDto> deleteParent(@PathVariable(value="id") Long id){
+    ResponseEntity<EnfantDto> deleteEnfant(@PathVariable(value="id") Long id){
         EnfantDto enfant = this.enfantService.getEnfant(id);
         if(enfant == null) {
             logger.error("Enfant introuvable dans la base de donnée");
@@ -91,6 +99,9 @@ public class EnfantController {
         this.enfantService.deleteEnfant(enfant);
         return ResponseEntity.ok().build();
     }
+
+
+
 
 }
 

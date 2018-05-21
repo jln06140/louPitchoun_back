@@ -1,5 +1,6 @@
 package co.simplon.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,13 @@ public class ProfilServiceImpl implements ProfilService{
 	@Override
 	public Profil addProfil( Profil profil ) {
 		return this.profilDao.save(profil);
+	}
+
+	@Override
+	public List<String> getAllLibelleProfils() {
+		List<Profil> listeProfils = getAllProfils();
+		List<String> listeLibelleProfils = new ArrayList<>();
+		listeProfils.stream().forEach(profil -> listeLibelleProfils.add(profil.getLibelle().toString()));
+		return listeLibelleProfils;
 	}
 }

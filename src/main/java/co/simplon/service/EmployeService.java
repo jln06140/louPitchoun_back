@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import co.simplon.controller.dto.EmployeDto;
+import co.simplon.exception.MotDePasseException;
 import co.simplon.model.Utilisateur;
 
 /**
@@ -16,7 +17,7 @@ import co.simplon.model.Utilisateur;
 public interface EmployeService {
 
 	Set<EmployeDto> getAllEmploye ();
-	EmployeDto addEmploye (EmployeDto employe);
+	EmployeDto addEmploye (EmployeDto employe) throws MotDePasseException;
 	EmployeDto getEmploye (Long id);
 	EmployeDto updateEmploye (EmployeDto employe);
 	void deleteEmploye (EmployeDto employe);

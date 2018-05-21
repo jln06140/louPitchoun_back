@@ -12,4 +12,5 @@ public interface ProfilService {
 	List<Profil> getAllProfils();
 	Profil addProfil(Profil profil);
 
+    List<String> getAllLibelleProfils();
 }

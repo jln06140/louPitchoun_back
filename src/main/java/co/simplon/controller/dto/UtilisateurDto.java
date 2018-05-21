@@ -1,6 +1,7 @@
 package co.simplon.controller.dto;
 
 import co.simplon.enums.ProfilEnum;
+import co.simplon.enums.SectionEnum;
 import io.swagger.annotations.ApiModel;
 
 @ApiModel("utilisateur")
@@ -11,6 +12,7 @@ public class UtilisateurDto {
     private String motDePasse;
     private boolean actif;
     private ProfilEnum profil;
+    private SectionEnum section;
     private InfoUserDto infoUserDto;
     private String createdDate;
     private String updatedDate;

@@ -1,12 +1,16 @@
 package co.simplon.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
 
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.dao.ParentDao;
+import co.simplon.exception.MotDePasseException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,6 +46,7 @@ public class ParentController{
 		return this.parentService.getAllParents();
 	}
 
+
 	/*
 	 *@param id du parent
 	 *@return
@@ -62,8 +67,22 @@ public class ParentController{
 	 * creation et ajout d'un nouveau parent
 	 */
 	@PostMapping
-    ParentDto addParent(@Valid @RequestBody ParentDto parent) {
-		return this.parentService.createUtilisateurParent(parent);
+    ResponseEntity<Object> addParent(@Valid @RequestBody ParentDto parent) {
+		ParentDto parentCreated = new ParentDto();
+		try{
+			parentCreated = this.parentService.createUtilisateurParent(parent);
+			return ResponseEntity.ok().body(parentCreated);
+		}
+		catch(MotDePasseException e){
+			Map<String,String> resultMap = new HashMap<>();
+			resultMap.put("message","Mot de passe obligatoire");
+			return ResponseEntity.badRequest().body(resultMap);
+		}catch(MySQLIntegrityConstraintViolationException e){
+			Map<String,String> resultMap = new HashMap<String,String>();
+			resultMap.put("message","Email deja enregistré");
+			return ResponseEntity.badRequest().body(resultMap);
+		}
+
 	}
 
 	/**

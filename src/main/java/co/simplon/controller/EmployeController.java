@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import co.simplon.controller.dto.EmployeDto;
+import co.simplon.exception.MotDePasseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -57,7 +58,7 @@ public class EmployeController {
      */
 
     @PostMapping
-    EmployeDto addEmploye(@Valid @RequestBody EmployeDto employe) {
+    EmployeDto addEmploye(@Valid @RequestBody EmployeDto employe) throws MotDePasseException {
         return this.serviceEmploye.addEmploye(employe);
     }
 

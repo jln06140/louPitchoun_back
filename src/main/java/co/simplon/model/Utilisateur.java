@@ -18,6 +18,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import co.simplon.enums.ProfilEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
@@ -44,11 +47,17 @@ public class Utilisateur {
     @JoinColumn(name = "id_info")
     private UserInfo info;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
     @JoinTable(name = "parent_enfant",
             joinColumns = {@JoinColumn(name = "geniteur_id")},
             inverseJoinColumns = {@JoinColumn(name = "enfant_id")})
+    @JsonIgnore
     private List<Enfant> enfants;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn ( name = "id_section")
+    private Section section;
 
     @CreatedDate
     @Column(name = "created_date")
@@ -125,7 +134,13 @@ public class Utilisateur {
         return this.profil.getLibelle().equals(ProfilEnum.PARENT.toString());
     }
 
+    public Section getSection() {
+        return section;
+    }
 
+    public void setSection(Section section) {
+        this.section = section;
+    }
 
     public String getUsername() {
         return username;

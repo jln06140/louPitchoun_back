@@ -1,12 +1,20 @@
 package co.simplon.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import co.simplon.controller.dto.EmployeDto;
+import co.simplon.controller.dto.EnfantDto;
 import co.simplon.controller.dto.ParentDto;
+import co.simplon.controller.mapper.EnfantMapper;
 import co.simplon.controller.mapper.UtilisateurMapper;
+import co.simplon.exception.MotDePasseException;
+import co.simplon.model.Enfant;
+import co.simplon.service.SectionService;
 import co.simplon.service.UtilisateurService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.jni.Local;
@@ -43,6 +51,12 @@ public class ParentServiceImpl implements ParentService{
 	private UtilisateurMapper utilisateurMapper;
 
 	@Autowired
+	private SectionService sectionService;
+
+	@Autowired
+	private EnfantMapper enfantMapper;
+
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
@@ -53,8 +67,20 @@ public class ParentServiceImpl implements ParentService{
 		return this.utilisateurMapper.mapListUtilisateurToParentDto(this.parentDao.findByProfil(profil));
 	}
 
-	public ParentDto createUtilisateurParent(ParentDto parentDto){
+	@Override
+	public ParentDto createUtilisateurParent(ParentDto parentDto) throws MotDePasseException,MySQLIntegrityConstraintViolationException {
 		Utilisateur utilisateur = this.utilisateurMapper.ParentDtoToUtilisateur(parentDto);
+		utilisateur.setCreatedDate(LocalDateTime.now());
+
+		//encodage mot de passe
+		if(parentDto.getMotDePasse() != null) {
+			utilisateur.setMotDePasse(this.passwordEncoder.encode(parentDto.getMotDePasse()));
+		}else{
+			throw new MotDePasseException("Mot de passe vide");
+		}
+
+		//attribution du profil parent
+		utilisateur.setProfil(this.profilService.getProfilByLibelle(parentDto.getProfil()));
 		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.save(utilisateur));
 	}
 
@@ -68,6 +94,7 @@ public class ParentServiceImpl implements ParentService{
 	@Override
 	public ParentDto updateParent(ParentDto parent) {
 		Utilisateur utilisateur = this.utilisateurMapper.map(this.utilisateurService.getUtilisateur(parent.getId()));
+		utilisateur.setUpdatedDate(LocalDateTime.now());
 		Utilisateur utilisateurUpdated = this.utilisateurMapper.ParentDtoToUtilisateur(parent);
 
 		//verification nouveau mot de passe different de l'ancien
@@ -78,7 +105,19 @@ public class ParentServiceImpl implements ParentService{
 		}
 
 		utilisateur.setInfo(utilisateurUpdated.getInfo());
-		utilisateur.getInfo().setEmail(utilisateurUpdated.getInfo().getEmail());
+		//utilisateur.getInfo().setEmail(utilisateurUpdated.getInfo().getEmail());
+		List<Enfant> listeEnfants = new ArrayList<>();
+		if((utilisateur.getEnfants() == null && parent.getEnfants() != null) || utilisateur.getEnfants().size() < parent.getEnfants().size()){
+			//utilisateur.setEnfants(utilisateurUpdated.getEnfants());
+			for (EnfantDto enfant : parent.getEnfants()){
+				Enfant temp = this.enfantMapper.enfantDtoToEnfant(enfant);
+				temp.setSection(this.sectionService.getSectionByNom(enfant.getSection()));
+				listeEnfants.add(temp);
+			}
+			utilisateur.setEnfants(listeEnfants);
+			//utilisateur.getEnfants().stream().forEach( (enfant) -> enfant.setSection());
+		}
+
 
 		//recuperation du profil
 		utilisateur.setProfil(this.profilService.getProfilByLibelle(parent.getProfil()));
