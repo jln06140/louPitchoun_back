@@ -1,6 +1,8 @@
 package co.simplon.model;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +18,8 @@ public class Activite {
 	@GeneratedValue ( strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private Timestamp heureDebut;
-	private Timestamp heureFin;
+	private LocalTime heureDebut;
+	private LocalTime heureFin;
 	private String remarque;
 	
 	@ManyToOne
@@ -30,16 +32,16 @@ public class Activite {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Timestamp getHeureDebut() {
+	public LocalTime getHeureDebut() {
 		return heureDebut;
 	}
-	public void setHeureDebut(Timestamp heureDebut) {
+	public void setHeureDebut(LocalTime heureDebut) {
 		this.heureDebut = heureDebut;
 	}
-	public Timestamp getHeureFin() {
+	public LocalTime getHeureFin() {
 		return heureFin;
 	}
-	public void setHeureFin(Timestamp heureFin) {
+	public void setHeureFin(LocalTime heureFin) {
 		this.heureFin = heureFin;
 	}
 	public String getRemarque() {
@@ -48,7 +50,12 @@ public class Activite {
 	public void setRemarque(String remarque) {
 		this.remarque = remarque;
 	}
-	
-	
-	
+
+	public TypeActivite getTypeActivite() {
+		return typeActivite;
+	}
+
+	public void setTypeActivite(TypeActivite typeActivite) {
+		this.typeActivite = typeActivite;
+	}
 }

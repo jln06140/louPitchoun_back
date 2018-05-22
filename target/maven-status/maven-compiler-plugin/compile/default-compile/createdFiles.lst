@@ -34,6 +34,7 @@ co\simplon\service\impl\JourneeEnfantServiceImpl.class
 co\simplon\controller\AuthController.class
 co\simplon\service\ParentService.class
 co\simplon\model\Info.class
+co\simplon\dao\ActiviteDao.class
 co\simplon\model\Activite.class
 co\simplon\service\AuthenticationService.class
 co\simplon\controller\EmployeController.class
@@ -42,9 +43,11 @@ co\simplon\model\Enfant.class
 co\simplon\service\impl\AuthenticationServiceImpl.class
 co\simplon\service\impl\EmployeServiceImpl.class
 co\simplon\model\Utilisateur.class
+co\simplon\service\impl\ActiviteServiceImpl.class
 co\simplon\config\GlobalControllerExceptionHandler.class
 co\simplon\service\SectionService.class
 co\simplon\controller\JourneeEnfantController.class
+co\simplon\dao\TypeActiviteDao.class
 co\simplon\service\JourneeEnfantService.class
 co\simplon\controller\dto\LoginDto.class
 co\simplon\dao\EnfantDao.class
@@ -63,6 +66,7 @@ co\simplon\controller\UtilisateurController.class
 co\simplon\enums\ProfilEnum.class
 co\simplon\service\impl\UserDetailsServiceImpl.class
 co\simplon\controller\EnfantController.class
+co\simplon\service\ActiviteService.class
 co\simplon\service\impl\EnfantServiceImpl.class
 co\simplon\controller\dto\InfoParentDto.class
 co\simplon\dao\UtilisateurDao.class
@@ -77,5 +81,6 @@ co\simplon\model\TypeActivite.class
 co\simplon\controller\ParentController.class
 co\simplon\dao\CommonInfoDao.class
 co\simplon\dao\EmployeDao.class
+co\simplon\controller\ActiviteController.class
 co\simplon\model\JourneeEnfant.class
 co\simplon\security\JwtTokens.class

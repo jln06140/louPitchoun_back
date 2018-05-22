@@ -1,9 +1,6 @@
 package co.simplon.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import co.simplon.enums.ActiviteEnum;
 
@@ -13,7 +10,8 @@ public class TypeActivite {
 	@Id
 	@GeneratedValue ( strategy = GenerationType.AUTO)
 	private Long id;
-	
+
+	@Enumerated(EnumType.STRING)
 	private ActiviteEnum typeActivite;
 	private String description;
 	

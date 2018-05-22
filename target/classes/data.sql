@@ -142,6 +142,16 @@ INSERT INTO `section` (`id`, `annee`, `email`, `nom`) VALUES
   (3, '2018', 'section2@gmail.com', 'GRAND');
 
 --
+-- Déchargement des données de la table `type_activite`
+--
+
+INSERT INTO `type_activite` (`id`, `description`, `type_activite`) VALUES
+  (1, NULL, 'PEINTURE'),
+  (2, NULL, 'COLORIAGE'),
+  (3, NULL, 'HISTOIRE'),
+  (4, NULL, 'EXTERIEUR');
+
+--
 -- Déchargement des données de la table `user_info`
 --
 
