@@ -63,7 +63,7 @@ public class EnfantController {
      * @return
      */
     @PostMapping
-    EnfantDto addParent(@Valid @RequestBody EnfantDto enfantDto) {
+    EnfantDto addEnfant(@Valid @RequestBody EnfantDto enfantDto) {
         return this.enfantService.addEnfant(enfantDto);
     }
 

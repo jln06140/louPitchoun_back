@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import co.simplon.enums.SectionEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -24,7 +25,7 @@ public class Section {
 	private String annee;
 	
 	@OneToMany(mappedBy = "section")
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Utilisateur> employes = new ArrayList<>();
 	
 	@OneToMany(mappedBy="section",

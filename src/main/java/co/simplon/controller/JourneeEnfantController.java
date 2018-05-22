@@ -23,16 +23,16 @@ public class JourneeEnfantController {
 
 
     //Creation d'un ibjet lorsque l'enfant arrive a la creche et mise ajour heure arrivee
-    @GetMapping("/start/{id}")
+    @GetMapping("/debuter/{id}")
     ResponseEntity<JourneeEnfant> debuterJournee(@PathVariable(value="id") Long enfantId){
         JourneeEnfant journeeEnfant = this.journeeEnfantService.debuterJournee(enfantId);
         return ResponseEntity.ok().body(journeeEnfant);
     }
 
     //cloture journée d'un enfant des qu'on renseigne son depart
-    @GetMapping("/close/{id}")
-    ResponseEntity<JourneeEnfant> dcloturerJournee(@PathVariable(value="id") Long enfantId){
-        JourneeEnfant journeeEnfant = this.journeeEnfantService.debuterJournee(enfantId);
+    @GetMapping("/cloturer/{id}")
+    ResponseEntity<JourneeEnfant> cloturerJournee(@PathVariable(value="id") Long enfantId){
+        JourneeEnfant journeeEnfant = this.journeeEnfantService.cloturerJournee(enfantId);
         return ResponseEntity.ok().body(journeeEnfant);
     }
 

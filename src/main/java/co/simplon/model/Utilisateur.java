@@ -55,7 +55,6 @@ public class Utilisateur {
     private List<Enfant> enfants;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn ( name = "id_section")
     private Section section;
 
