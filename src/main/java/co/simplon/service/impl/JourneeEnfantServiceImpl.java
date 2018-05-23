@@ -54,6 +54,12 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
     }
 
     @Override
+    public JourneeEnfant updateJourneeEnfant(JourneeEnfant journeeEnfant) {
+        JourneeEnfant journeeEnfantToUpodate = new JourneeEnfant();
+        return null;
+    }
+
+    @Override
     public JourneeEnfant debuterJournee(Long enfantId) {
         EnfantDto enfantDto = enfantService.getEnfant(enfantId);
         Enfant enfant = this.enfantMapper.enfantDtoToEnfant(enfantDto);
