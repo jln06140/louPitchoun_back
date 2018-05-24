@@ -32,13 +32,19 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
     private SectionService sectionService;
 
     @Override
-    public List<JourneeEnfant> getJourneesEnfants() {
+    public List<JourneeEnfant> getJourneesAllEnfants() {
         return this.journeeEnfantDao.findAll();
     }
 
     @Override
-    public List <JourneeEnfant> getJourneeEnfant(Long id) {
-        List<JourneeEnfant> journeesEnfants = this.getJourneesEnfants();
+    public JourneeEnfant getJournee(Long id){
+        JourneeEnfant journeeEnfant = this.journeeEnfantDao.findOne(id);
+        return journeeEnfant;
+    }
+
+    @Override
+    public List <JourneeEnfant> getJourneesByEnfant(Long id) {
+        List<JourneeEnfant> journeesEnfants = this.getJourneesAllEnfants();
         List<JourneeEnfant> journeesEnfantResultat = new ArrayList<>();
         for (JourneeEnfant journeeEnfant : journeesEnfants){
             if (journeeEnfant.getEnfant().getId() == id){
@@ -49,8 +55,13 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
     }
 
     @Override
-    public JourneeEnfant getJourneeByDateAndEnfant(LocalDate date) {
-        return null;
+    public JourneeEnfant getJourneeByDateAndEnfant(LocalDate date, Long id) {
+        LocalDate dateDuJour = LocalDate.now();
+        List<JourneeEnfant> listeJourneeDeEnfant = getJourneesByEnfant(id);
+        JourneeEnfant journeeDuJourRetour = listeJourneeDeEnfant.stream().filter( journee -> journee.getDate() == dateDuJour).findAny().get();
+        return journeeDuJourRetour;
+        //to do throw error si aucune journee trouvee alors pas de jours trouvés
+
     }
 
     @Override

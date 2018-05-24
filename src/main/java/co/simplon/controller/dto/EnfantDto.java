@@ -2,7 +2,8 @@ package co.simplon.controller.dto;
 
 import co.simplon.enums.SectionEnum;
 import co.simplon.model.JourneeEnfant;
-import co.simplon.model.Section;
+import co.simplon.model.Repas;
+import co.simplon.model.Sieste;
 import io.swagger.annotations.ApiModel;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class EnfantDto {
     private SectionEnum section;
     private String createdDate;
     private List<JourneeEnfant> journees = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -65,4 +67,6 @@ public class EnfantDto {
     public void setJournees(List<JourneeEnfant> journees) {
         this.journees = journees;
     }
+
+
 }

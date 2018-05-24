@@ -2,7 +2,9 @@ package co.simplon.controller;
 
 import co.simplon.controller.dto.EmployeDto;
 import co.simplon.model.Activite;
+import co.simplon.model.JourneeEnfant;
 import co.simplon.service.ActiviteService;
+import co.simplon.service.JourneeEnfantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class ActiviteController {
 
     @Autowired
     private ActiviteService activiteService;
+
+    @Autowired
+    private JourneeEnfantService journeeEnfantService;
 
     @GetMapping
     List<Activite> getAllActivites() {
@@ -38,14 +43,31 @@ public class ActiviteController {
         return ResponseEntity.ok().body(activite);
     }
 
+    @GetMapping("activitesParEnfant/{id}")
+    List<Activite> getActivitesParJourneeEnCoursEnfant(@PathVariable(value = "id") Long id){
+        JourneeEnfant journeeEnfant = this.journeeEnfantService.getJourneeEnCoursEnfant(id);
+        if (!journeeEnfant.getActivites().isEmpty()){
+            return journeeEnfant.getActivites();
+        }
+        return null;
+        //to do throw error aucune activité dans journee en cours
+    }
+
     /**
      *
      * @param activite
      * @return
      */
-    @PostMapping
-    Activite addActivite (@Valid @RequestBody Activite activite){
-        return this.activiteService.addActivite(activite);
+    @PostMapping("{id}")
+    Activite addActiviteDansJournee (@PathVariable(value = "id") Long id,@Valid @RequestBody Activite activite){
+        JourneeEnfant journeeEnfant = this.journeeEnfantService.getJournee(id);
+        if(journeeEnfant != null){
+            journeeEnfant.getActivites().add(activite);
+            return this.activiteService.addActivite(activite);
+        }
+        return null;
+        //to throw error impossible ajouter activite
+
     }
 
     /**

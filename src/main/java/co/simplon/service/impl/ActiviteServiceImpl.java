@@ -20,7 +20,7 @@ public class ActiviteServiceImpl implements ActiviteService {
     public Activite addActivite(Activite activite) {
 
         activite.setHeureDebut(LocalDateTime.now().toLocalTime());
-        activite.setTypeActivite(activite.getTypeActivite());
+       // activite.setTypeActivite(activite.getTypeActivite());
         return this.activiteDao.save(activite);
 
     }

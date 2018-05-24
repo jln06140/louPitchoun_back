@@ -9,10 +9,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface JourneeEnfantService {
-    List<JourneeEnfant> getJourneesEnfants();
+    List<JourneeEnfant> getJourneesAllEnfants();
+
+    JourneeEnfant getJournee(Long id);
+
     //JourneeEnfant addActiviteDansJournee(Activite activite, )
-    List <JourneeEnfant> getJourneeEnfant(Long id);
-    JourneeEnfant getJourneeByDateAndEnfant(LocalDate date);
+    List <JourneeEnfant> getJourneesByEnfant(Long id);
+
+    JourneeEnfant getJourneeByDateAndEnfant(LocalDate date, Long id);
+
     JourneeEnfant updateJourneeEnfant(JourneeEnfant journeeEnfant);
 
     JourneeEnfant debuterJournee(Long enfantId);

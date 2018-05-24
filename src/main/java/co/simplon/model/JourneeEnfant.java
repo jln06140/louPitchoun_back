@@ -2,6 +2,7 @@ package co.simplon.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.apache.commons.collections.ArrayStack;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,9 +32,16 @@ public class JourneeEnfant {
 	private Enfant enfant;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JsonManagedReference
 	@JoinColumn ( name = "id_activite")
 	private List<Activite> activites = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_sieste")
+	private List<Sieste> siestes = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_repas")
+	private List<Repas> repas = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -92,5 +100,21 @@ public class JourneeEnfant {
 
 	public void setJourneeEnCours(boolean journeeEnCours) {
 		this.journeeEnCours = journeeEnCours;
+	}
+
+	public List<Sieste> getSiestes() {
+		return siestes;
+	}
+
+	public void setSiestes(List<Sieste> siestes) {
+		this.siestes = siestes;
+	}
+
+	public List<Repas> getRepas() {
+		return repas;
+	}
+
+	public void setRepas(List<Repas> repas) {
+		this.repas = repas;
 	}
 }

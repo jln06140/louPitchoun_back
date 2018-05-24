@@ -20,8 +20,26 @@ public class JourneeEnfantController {
 
     @GetMapping
     List<JourneeEnfant> getAllJournees(){
-        return this.journeeEnfantService.getJourneesEnfants();
+        return this.journeeEnfantService.getJourneesAllEnfants();
     }
+
+    @GetMapping("journeesEnfant/{id}")
+    List<JourneeEnfant> getAllJourneesEnfant(@PathVariable(value = "id") Long id)
+    {
+        return this.journeeEnfantService.getJourneesByEnfant(id);
+    }
+
+    @GetMapping("journeesEnCoursEnfant/{id}")
+    JourneeEnfant getJourneesEnCoursEnfant(@PathVariable(value = "id") Long id)
+    {
+        JourneeEnfant journeeEnfantEnCours = this.getJourneesEnCoursEnfant(id);
+        if(journeeEnfantEnCours == null){
+            return null;
+            //to do throw error pas de journee en cours pour cet enfant
+        }
+        return journeeEnfantEnCours;
+    }
+
 
 
     //Creation d'un ibjet lorsque l'enfant arrive a la creche et mise ajour heure arrivee
@@ -39,7 +57,7 @@ public class JourneeEnfantController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<JourneeEnfant> updateJourneeEnCours(@PathVariable(value = "id") Long id,@Valid @RequestBody JourneeEnfant journeeEnfant){
+    ResponseEntity<JourneeEnfant> updateJourneeEnCours(@PathVariable(value = "id") Long id,@RequestBody JourneeEnfant journeeEnfant){
         JourneeEnfant journeeEnfantToUpdate = this.journeeEnfantService.getJourneeEnCoursEnfant(id);
         if (journeeEnfantToUpdate == null) {
             //logger.error("Aucune journee en cours");
