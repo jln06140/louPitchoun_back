@@ -53,54 +53,24 @@ public class SiesteServiceImpl implements SiesteService {
 
 
     /**
-     * retourne toutes les siestes en cours
+     *
+     * @param journeeId
+     * @param sieste
      * @return
+     * @throws Exception
      */
     @Override
-    public List<Sieste> allSiesteEnCours() {
-        List<SiesteService> allSiestesEnCours = new ArrayList<>();
-        List<Sieste> siestes = this.allSiestes().stream().filter(sieste -> sieste.isSiesteEnCours()).collect(Collectors.toList());
-        return siestes;
-    }
-
-    /**
-     * reourne sieste en cours d'un enfant
-     * @param enfantId
-     * @return
-     */
-    @Override
-    public Sieste getSiesteEnCoursEnfant(Long enfantId) throws Exception {
-        Sieste siesteEnCours = allSiestesDuJourParEnfant(enfantId).stream().filter( sieste -> sieste.isSiesteEnCours()).findFirst().get();
-        return siesteEnCours;
-        //throw error aucune sieste en cours pour cet enfant
-    }
-
-
-    /**
-     * Debute une sieste d'un enfant
-     * @param enfantId
-     * @return
-     */
-    @Override
-    public Sieste debuterSieste(Long enfantId) throws Exception {
-        List<Sieste> siestes = this.journeeEnfantService.getJourneeEnCoursEnfant(enfantId).getSiestes();
-        Sieste sieste = new Sieste();
-        sieste.setHeureDebut(LocalDateTime.now().toLocalTime());
-        sieste.setSiesteEnCours(true);
-        siestes.add(sieste);
+    public Sieste ajouterSieste(Long journeeId, Sieste sieste) throws Exception {
+        JourneeEnfant journeeEnfant = this.journeeEnfantService.getJournee(journeeId);
+        journeeEnfant.getSiestes().add(sieste);
         return this.siesteDao.save(sieste);
     }
 
     /**
-     * Termine la sieste d'un enfant
-     * @param enfantId
+     *
+     * @param id
      * @return
      */
-    @Override
-    public Sieste terminerSieste(Long enfantId) {
-        return null;
-    }
-
     @Override
     public Sieste getSieste(Long id) {
         Sieste sieste = this.siesteDao.findOne(id);

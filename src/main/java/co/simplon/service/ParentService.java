@@ -1,8 +1,10 @@
 package co.simplon.service;
 
+import java.util.List;
 import java.util.Set;
 
 import co.simplon.controller.dto.EmployeDto;
+import co.simplon.controller.dto.EnfantDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.exception.MotDePasseException;
 import co.simplon.model.Utilisateur;
@@ -21,6 +23,9 @@ public interface ParentService {
 	ParentDto getParent( Long id);
 
 	ParentDto updateParent( ParentDto parent);
-	void deleteParent (ParentDto parent);
+
+    ParentDto ajoutEnfantAuParent(Long parentId, List<EnfantDto> listeEnfants);
+
+    void deleteParent (ParentDto parent);
 }
 

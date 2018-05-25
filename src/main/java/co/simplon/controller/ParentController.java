@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import co.simplon.controller.dto.EnfantDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.dao.ParentDao;
 import co.simplon.exception.MotDePasseException;
@@ -82,6 +83,14 @@ public class ParentController{
 			resultMap.put("message","Email deja enregistré");
 			return ResponseEntity.badRequest().body(resultMap);
 		}
+
+	}
+
+	@PostMapping("/ajoutenfant/{id}")
+	ResponseEntity<Object> addEnfantToParent(@PathVariable(value = "id") Long parentId, @Valid @RequestBody List<EnfantDto> enfantsAajouter) {
+			ParentDto parentDto = this.parentService.ajoutEnfantAuParent(parentId, enfantsAajouter);
+			return ResponseEntity.ok().body(parentDto);
+
 
 	}
 

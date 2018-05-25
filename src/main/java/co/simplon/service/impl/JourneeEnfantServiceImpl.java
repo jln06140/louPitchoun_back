@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +107,7 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
         if (enfantDto != null && !enfantDto.getJournees().isEmpty() ){
             List<JourneeEnfant> journeesEnfant = enfantDto.getJournees();
             JourneeEnfant journeeEnfantEnCours = journeesEnfant.stream().filter(journee -> journee.isJourneeEnCours()).findFirst().get();
+
             return journeeEnfantEnCours;
         }
         return null;

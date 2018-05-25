@@ -14,8 +14,9 @@ public class Repas {
     private Long id;
 
     private LocalTime heureDebut;
-    private String repas;
+    private String menu;
     private String quantite;
+    private String remarque;
 
     public Long getId() {
         return id;
@@ -34,11 +35,11 @@ public class Repas {
     }
 
     public String getRepas() {
-        return repas;
+        return menu;
     }
 
     public void setRepas(String repas) {
-        this.repas = repas;
+        this.menu = repas;
     }
 
     public String getQuantite() {
@@ -47,5 +48,21 @@ public class Repas {
 
     public void setQuantite(String quantite) {
         this.quantite = quantite;
+    }
+
+    public String getMenu() {
+        return menu;
+    }
+
+    public void setMenu(String menu) {
+        this.menu = menu;
+    }
+
+    public String getRemarque() {
+        return remarque;
+    }
+
+    public void setRemarque(String remarque) {
+        this.remarque = remarque;
     }
 }

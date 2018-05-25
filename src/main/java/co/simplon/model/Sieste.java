@@ -10,10 +10,9 @@ import java.time.LocalTime;
 public class Sieste {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private boolean siesteEnCours = false;
     private LocalTime heureDebut;
     private LocalTime heureFin;
     private String remarque;
@@ -50,11 +49,4 @@ public class Sieste {
         this.remarque = remarque;
     }
 
-    public boolean isSiesteEnCours() {
-        return siesteEnCours;
-    }
-
-    public void setSiesteEnCours(boolean siesteEnCours) {
-        this.siesteEnCours = siesteEnCours;
-    }
 }

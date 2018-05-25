@@ -105,7 +105,7 @@ public class ParentServiceImpl implements ParentService{
 		}
 
 		utilisateur.setInfo(utilisateurUpdated.getInfo());
-		//utilisateur.getInfo().setEmail(utilisateurUpdated.getInfo().getEmail());
+
 		List<Enfant> listeEnfants = new ArrayList<>();
 		if((utilisateur.getEnfants() == null && parent.getEnfants() != null) || utilisateur.getEnfants().size() < parent.getEnfants().size()){
 			//utilisateur.setEnfants(utilisateurUpdated.getEnfants());
@@ -125,6 +125,14 @@ public class ParentServiceImpl implements ParentService{
 		//mise a jour de la date de moddification
 		utilisateur.setUpdatedDate(LocalDateTime.now());
 		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.save(utilisateur));
+	}
+
+	@Override
+	public ParentDto ajoutEnfantAuParent(Long parentId, List<EnfantDto> listeEnfants){
+		ParentDto parentDto = getParent(parentId);
+		parentDto.getEnfants().addAll(listeEnfants);
+		//Utilisateur utilisateur = this.utilisateurMapper.ParentDtoToUtilisateur(parentDto);
+		return updateParent(parentDto);
 	}
 
 	@Override

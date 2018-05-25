@@ -44,10 +44,10 @@ public class SiesteController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/demarrerSieste/{id}")
-    ResponseEntity<Sieste> demarrerSieste (@PathVariable(value = "id") Long enfantId) throws Exception {
-
-        Sieste siesteEnCours = this.siesteService.debuterSieste(enfantId);
+    @PostMapping("ajoutsieste/{id}")
+    ResponseEntity<Sieste> ajoutSieste (@PathVariable(value = "id") Long journeeId, @Valid @RequestBody Sieste sieste) throws Exception {
+        //JourneeEnfant journeeEnfant = this
+        Sieste siesteEnCours = this.siesteService.ajouterSieste(journeeId, sieste);
         return ResponseEntity.ok().body(siesteEnCours);
     }
 
@@ -60,26 +60,6 @@ public class SiesteController {
         }
         return null;
     }
-
-    @GetMapping("/siestesEnCours")
-    List<Sieste> getAllSiestesEnCours(){
-        List<Sieste> siestesEnCours = this.siesteService.allSiesteEnCours();
-        return siestesEnCours;
-    }
-
-    @GetMapping("/siestesEnCoursParEnfant/{id}")
-    ResponseEntity<Sieste> SiestesEnCoursParEnfant(@PathVariable(value = "id") Long enfantId) throws Exception {
-        try{
-            Sieste siesteEnCoursEnfant =  this.siesteService.getSiesteEnCoursEnfant(enfantId);
-            return ResponseEntity.ok().body(siesteEnCoursEnfant);
-        }catch (Exception e){
-            ResponseEntity.badRequest().build();
-        }
-
-        return null;
-    }
-
-
 
 
 }
