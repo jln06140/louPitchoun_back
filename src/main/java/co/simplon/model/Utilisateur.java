@@ -18,12 +18,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import co.simplon.enums.ProfilEnum;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.CreatedDate;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Utilisateur {
 
     @Id
@@ -47,15 +48,15 @@ public class Utilisateur {
     @JoinColumn(name = "id_info")
     private UserInfo info;
 
-    @ManyToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
+
+    @ManyToMany(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
     @JoinTable(name = "parent_enfant",
             joinColumns = {@JoinColumn(name = "geniteur_id")},
             inverseJoinColumns = {@JoinColumn(name = "enfant_id")})
-    @JsonIgnore
     private List<Enfant> enfants;
 
     @ManyToOne
-    @JoinColumn ( name = "id_section")
+    @JoinColumn ( name = "id_section", nullable=true)
     private Section section;
 
     @CreatedDate

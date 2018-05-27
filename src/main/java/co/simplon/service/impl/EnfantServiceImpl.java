@@ -80,6 +80,12 @@ public class EnfantServiceImpl implements EnfantService{
 
     }
 
+    @Override
+    public List<EnfantDto> getEnfantsDuParent(ParentDto parent) {
+        List<EnfantDto> enfantsDuParent = parent.getEnfants();
+        return enfantsDuParent;
+    }
+
 //    @Override
 //    public boolean aJourneeEnCours(Enfant enfant){
 //        if (!enfant.getJournees().isEmpty()){

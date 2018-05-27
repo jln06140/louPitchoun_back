@@ -28,6 +28,8 @@ public class ParentDto {
 	private String updatedDate;
 	private ProfilEnum profil;
 	private InfoParentDto infoParent;
+
+
 	private List<EnfantDto> enfants;
 
 	public String getUsername() {

@@ -1,9 +1,6 @@
 package co.simplon.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -15,13 +12,18 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id")
 public class Enfant {
 
 	@Id
 	@GeneratedValue ( strategy = GenerationType.AUTO)
 	private long id;
 
-	@ManyToMany( mappedBy = "enfants",fetch = FetchType.EAGER)
+	@JsonIgnore
+	@ManyToMany( mappedBy = "enfants")
+	@JsonIgnoreProperties()
 	private List<Utilisateur> geniteurs;
 	
 	@OneToOne(cascade = {CascadeType.ALL})

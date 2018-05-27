@@ -5,6 +5,7 @@ import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.dto.UtilisateurDto;
 import co.simplon.enums.ProfilEnum;
 import co.simplon.enums.SectionEnum;
+import co.simplon.model.Enfant;
 import co.simplon.model.Profil;
 import co.simplon.model.Section;
 import co.simplon.model.Utilisateur;
@@ -52,6 +53,33 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         parentDto.setActif( user.isActif() );
         parentDto.setEnfants( enfantMapper.listEnfantToEnfantDto( user.getEnfants() ) );
         parentDto.setId( user.getId() );
+
+        return parentDto;
+    }
+
+    @Override
+    public ParentDto UtilisateurToParentDtoSansEnfants(Utilisateur utilisateur) {
+        if ( utilisateur == null ) {
+            return null;
+        }
+
+        ParentDto parentDto = new ParentDto();
+
+        parentDto.setInfoParent( infoMapper.infoParentDtoToInfo( utilisateur.getInfo() ) );
+        if ( utilisateur.getCreatedDate() != null ) {
+            parentDto.setCreatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
+        }
+        if ( utilisateur.getUpdatedDate() != null ) {
+            parentDto.setUpdatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getUpdatedDate() ) );
+        }
+        ProfilEnum libelle = userProfilLibelle( utilisateur );
+        if ( libelle != null ) {
+            parentDto.setProfil( libelle );
+        }
+        parentDto.setUsername( utilisateur.getUsername() );
+        parentDto.setMotDePasse( utilisateur.getMotDePasse() );
+        parentDto.setActif( utilisateur.isActif() );
+        parentDto.setId( utilisateur.getId() );
 
         return parentDto;
     }
@@ -145,6 +173,10 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
 
         UtilisateurDto utilisateurDto = new UtilisateurDto();
 
+        SectionEnum nom = utilisateurSectionNom( utilisateur );
+        if ( nom != null ) {
+            utilisateurDto.setSection( nom );
+        }
         utilisateurDto.setInfoUserDto( infoMapper.map( utilisateur.getInfo() ) );
         if ( utilisateur.getCreatedDate() != null ) {
             utilisateurDto.setCreatedDate( DateTimeFormatter.ofPattern( "dd-MM-yyyy HH:mm:ss" ).format( utilisateur.getCreatedDate() ) );
@@ -160,6 +192,13 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         utilisateurDto.setUsername( utilisateur.getUsername() );
         utilisateurDto.setActif( utilisateur.isActif() );
         utilisateurDto.setId( utilisateur.getId() );
+        List<Enfant> list = utilisateur.getEnfants();
+        if ( list != null ) {
+            utilisateurDto.setEnfants( new ArrayList<Enfant>( list ) );
+        }
+        else {
+            utilisateurDto.setEnfants( null );
+        }
 
         return utilisateurDto;
     }
@@ -183,6 +222,14 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
         utilisateur1.setMotDePasse( utilisateur.getMotDePasse() );
         utilisateur1.setActif( utilisateur.isActif() );
         utilisateur1.setProfil( profilEnumToProfil( utilisateur.getProfil() ) );
+        List<Enfant> list = utilisateur.getEnfants();
+        if ( list != null ) {
+            utilisateur1.setEnfants( new ArrayList<Enfant>( list ) );
+        }
+        else {
+            utilisateur1.setEnfants( null );
+        }
+        utilisateur1.setSection( sectionEnumToSection( utilisateur.getSection() ) );
         utilisateur1.setUsername( utilisateur.getUsername() );
 
         return utilisateur1;
@@ -203,14 +250,14 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
     }
 
     @Override
-    public List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs) {
+    public List<ParentDto> mapListUtilisateurToParentDtoSansEnfant(List<Utilisateur> utilisateurs) {
         if ( utilisateurs == null ) {
             return null;
         }
 
         List<ParentDto> list = new ArrayList<ParentDto>( utilisateurs.size() );
         for ( Utilisateur utilisateur : utilisateurs ) {
-            list.add( utilisateurToParentDto( utilisateur ) );
+            list.add( UtilisateurToParentDtoSansEnfants( utilisateur ) );
         }
 
         return list;

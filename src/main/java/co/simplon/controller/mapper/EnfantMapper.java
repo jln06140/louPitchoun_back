@@ -7,7 +7,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
 import java.util.List;
-import java.util.Set;
 
 @Mapper(uses= {InfoMapper.class, UtilisateurMapper.class})
 public interface EnfantMapper {
@@ -15,10 +14,12 @@ public interface EnfantMapper {
 
     @Mappings({
            @Mapping(target = "section", source = "section.nom"),
+            @Mapping(target = "geniteurs",qualifiedByName = {"parentDtoSansEnfants"}),
            @Mapping(target="createdDate", source = "enfant.createdDate",
                     dateFormat = "dd-MM-yyyy HH:mm:ss"),
     })
     EnfantDto enfantToEnfantDto(Enfant enfant);
+
 
     @Mappings({
 

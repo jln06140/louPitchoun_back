@@ -1,8 +1,10 @@
 package co.simplon.controller;
 
 import co.simplon.controller.dto.EnfantDto;
+import co.simplon.controller.dto.ParentDto;
 import co.simplon.model.Enfant;
 import co.simplon.service.EnfantService;
+import co.simplon.service.ParentService;
 import co.simplon.service.SectionService;
 import co.simplon.service.impl.UtilisateurServiceImpl;
 import org.apache.log4j.LogManager;
@@ -30,6 +32,9 @@ public class EnfantController {
     @Autowired
     private EnfantService enfantService;
 
+    @Autowired
+    private ParentService parentService;
+
 
 
     /**
@@ -41,6 +46,17 @@ public class EnfantController {
 
         return this.enfantService.getEnfants();
     }
+
+    @GetMapping("/enfantsDuParent/{id}")
+    ResponseEntity<List<EnfantDto>> getEnfantDuParent(@PathVariable (value = "id") Long id){
+        ParentDto parent = this.parentService.getParent(id);
+        if(parent == null){
+            return ResponseEntity.notFound().build();
+        }
+        List<EnfantDto> enfants = this.enfantService.getEnfantsDuParent(parent);
+        return ResponseEntity.ok().body(enfants);
+    }
+
 
     /**
      *

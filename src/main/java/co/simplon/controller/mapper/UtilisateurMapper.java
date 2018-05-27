@@ -6,9 +6,7 @@ import co.simplon.controller.dto.InfoEmployeDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.controller.dto.UtilisateurDto;
 import co.simplon.model.Utilisateur;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
+import org.mapstruct.*;
 
 import java.util.List;
 import java.util.Set;
@@ -26,6 +24,17 @@ public interface UtilisateurMapper {
     })
     ParentDto utilisateurToParentDto(Utilisateur user);
 
+    @Named("parentDtoSansEnfants")
+    @Mappings({
+            @Mapping(target = "profil", source = "profil.libelle"),
+            @Mapping(target = "infoParent", source= "utilisateur.info"),
+            @Mapping(target = "enfants", ignore = true),
+            @Mapping(target="createdDate", source = "utilisateur.createdDate",
+                    dateFormat = "dd-MM-yyyy HH:mm:ss"),
+            @Mapping(target="updatedDate", source = "utilisateur.updatedDate",
+                    dateFormat = "dd-MM-yyyy HH:mm:ss")
+    })
+    ParentDto UtilisateurToParentDtoSansEnfants (Utilisateur utilisateur);
 
     @Mappings({
             @Mapping(target = "info", source= "parent.infoParent"),
@@ -59,6 +68,7 @@ public interface UtilisateurMapper {
     @Mappings({
         @Mapping(target = "infoUserDto", source= "utilisateur.info"),
         @Mapping(target = "profil", source = "profil.libelle"),
+            @Mapping(target = "section", source = "section.nom"),
         @Mapping(target="createdDate", source = "utilisateur.createdDate",
                 dateFormat = "dd-MM-yyyy HH:mm:ss"),
         @Mapping(target="updatedDate", source = "utilisateur.updatedDate",
@@ -78,7 +88,11 @@ public interface UtilisateurMapper {
 
     List<UtilisateurDto> map(List<Utilisateur> utilisateurs);
 
-    List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs);
+    //List<ParentDto> mapListUtilisateurToParentDto(List<Utilisateur> utilisateurs);
+
+    @Named("listParentSansEnfants")
+    @IterableMapping(qualifiedByName = "parentDtoSansEnfants")
+    List<ParentDto> mapListUtilisateurToParentDtoSansEnfant(List<Utilisateur> utilisateurs);
 
     Set<ParentDto> mapListUtilisateurToParentDto(Set<Utilisateur> utilisateurs);
 

@@ -42,7 +42,7 @@ public class EnfantMapperImpl implements EnfantMapper {
         }
         enfantDto.setId( enfant.getId() );
         enfantDto.setEnfantInfo( infoMapper.enfantInfoToInfoEnfantDto( enfant.getEnfantInfo() ) );
-        enfantDto.setGeniteurs( utilisateurMapper.mapListUtilisateurToParentDto( enfant.getGeniteurs() ) );
+        enfantDto.setGeniteurs( utilisateurMapper.mapListUtilisateurToParentDtoSansEnfant( enfant.getGeniteurs() ) );
         List<JourneeEnfant> list1 = enfant.getJournees();
         if ( list1 != null ) {
             enfantDto.setJournees( new ArrayList<JourneeEnfant>( list1 ) );

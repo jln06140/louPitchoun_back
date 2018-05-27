@@ -106,17 +106,20 @@ public class ParentServiceImpl implements ParentService{
 
 		utilisateur.setInfo(utilisateurUpdated.getInfo());
 
-		List<Enfant> listeEnfants = new ArrayList<>();
-		if((utilisateur.getEnfants() == null && parent.getEnfants() != null) || utilisateur.getEnfants().size() < parent.getEnfants().size()){
-			//utilisateur.setEnfants(utilisateurUpdated.getEnfants());
-			for (EnfantDto enfant : parent.getEnfants()){
+		List<Enfant> listeEnfants =new ArrayList<>();
+//		if((utilisateur.getEnfants() == null && parent.getEnfants() != null) || utilisateur.getEnfants().size() < parent.getEnfants().size()){
+//			//utilisateur.setEnfants(utilisateurUpdated.getEnfants());
+		if(parent.getEnfants() != null && !parent.getEnfants().isEmpty()) {
+			for (EnfantDto enfant : parent.getEnfants()) {
 				Enfant temp = this.enfantMapper.enfantDtoToEnfant(enfant);
 				temp.setSection(this.sectionService.getSectionByNom(enfant.getSection()));
 				listeEnfants.add(temp);
 			}
-			utilisateur.setEnfants(listeEnfants);
-			//utilisateur.getEnfants().stream().forEach( (enfant) -> enfant.setSection());
+
 		}
+		utilisateur.setEnfants(listeEnfants);
+			//utilisateur.getEnfants().stream().forEach( (enfant) -> enfant.setSection());
+	//	}
 
 
 		//recuperation du profil
@@ -124,13 +127,31 @@ public class ParentServiceImpl implements ParentService{
 
 		//mise a jour de la date de moddification
 		utilisateur.setUpdatedDate(LocalDateTime.now());
-		return this.utilisateurMapper.utilisateurToParentDto(this.parentDao.save(utilisateur));
+		Utilisateur parentSaved = this.parentDao.save(utilisateur);
+		return this.utilisateurMapper.utilisateurToParentDto(parentSaved);
 	}
 
 	@Override
 	public ParentDto ajoutEnfantAuParent(Long parentId, List<EnfantDto> listeEnfants){
 		ParentDto parentDto = getParent(parentId);
-		parentDto.getEnfants().addAll(listeEnfants);
+//		boolean isPresent = true;
+//		List<EnfantDto> enfantsDuParent = parentDto.getEnfants();
+//		List<EnfantDto> enfantsAjoutes = new ArrayList<>();
+//		if(enfantsDuParent.isEmpty() && !listeEnfants.isEmpty())
+//			enfantsAjoutes.addAll(listeEnfants);
+//		else {
+//			for (EnfantDto enfant : listeEnfants) {
+//				isPresent = false;
+//				for (EnfantDto enfantParent : enfantsDuParent) {
+//					if (enfant.getId().equals(enfantParent.getId())) {
+//						isPresent = true;
+//					}
+//
+//				}
+//				if (!isPresent) enfantsAjoutes.add(enfant);
+//			}
+//		}
+		parentDto.setEnfants(listeEnfants);
 		//Utilisateur utilisateur = this.utilisateurMapper.ParentDtoToUtilisateur(parentDto);
 		return updateParent(parentDto);
 	}

@@ -2,7 +2,10 @@ package co.simplon.controller.dto;
 
 import co.simplon.enums.ProfilEnum;
 import co.simplon.enums.SectionEnum;
+import co.simplon.model.Enfant;
 import io.swagger.annotations.ApiModel;
+
+import java.util.List;
 
 @ApiModel("utilisateur")
 public class UtilisateurDto {
@@ -16,6 +19,7 @@ public class UtilisateurDto {
     private InfoUserDto infoUserDto;
     private String createdDate;
     private String updatedDate;
+    private List<Enfant> enfants;
 
 
 
@@ -82,4 +86,19 @@ public class UtilisateurDto {
         this.id = id;
     }
 
+    public SectionEnum getSection() {
+        return section;
+    }
+
+    public void setSection(SectionEnum section) {
+        this.section = section;
+    }
+
+    public List<Enfant> getEnfants() {
+        return enfants;
+    }
+
+    public void setEnfants(List<Enfant> enfants) {
+        this.enfants = enfants;
+    }
 }
