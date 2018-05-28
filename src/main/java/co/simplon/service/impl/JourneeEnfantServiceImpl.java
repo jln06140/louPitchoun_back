@@ -32,29 +32,49 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
     @Autowired
     private SectionService sectionService;
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<JourneeEnfant> getJourneesAllEnfants() {
         return this.journeeEnfantDao.findAll();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public JourneeEnfant getJournee(Long id){
         JourneeEnfant journeeEnfant = this.journeeEnfantDao.findOne(id);
         return journeeEnfant;
     }
 
+    /**
+     *
+     * @param enfantId
+     * @return
+     */
     @Override
-    public List <JourneeEnfant> getJourneesByEnfant(Long id) {
+    public List <JourneeEnfant> getJourneesByEnfant(Long enfantId) {
         List<JourneeEnfant> journeesEnfants = this.getJourneesAllEnfants();
         List<JourneeEnfant> journeesEnfantResultat = new ArrayList<>();
         for (JourneeEnfant journeeEnfant : journeesEnfants){
-            if (journeeEnfant.getEnfant().getId() == id){
+            if (journeeEnfant.getEnfant().getId() == enfantId){
                 journeesEnfantResultat.add(journeeEnfant);
             }
         }
         return journeesEnfantResultat;
     }
 
+    /**
+     *
+     * @param date
+     * @param id
+     * @return
+     */
     @Override
     public JourneeEnfant getJourneeByDateAndEnfant(LocalDate date, Long id) {
         LocalDate dateDuJour = LocalDate.now();
@@ -65,12 +85,22 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
 
     }
 
+    /**
+     *
+     * @param journeeEnfant
+     * @return
+     */
     @Override
     public JourneeEnfant updateJourneeEnfant(JourneeEnfant journeeEnfant) {
         JourneeEnfant journeeEnfantToUpodate = new JourneeEnfant();
         return null;
     }
 
+    /**
+     *
+     * @param enfantId
+     * @return
+     */
     @Override
     public JourneeEnfant debuterJournee(Long enfantId) {
         EnfantDto enfantDto = enfantService.getEnfant(enfantId);
@@ -89,6 +119,11 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
         //to do throw error journée deja en cours
     }
 
+    /**
+     *
+     * @param enfantId
+     * @return
+     */
     @Override
     public JourneeEnfant cloturerJournee(Long enfantId){
         JourneeEnfant journeeEnfant = this.getJourneeEnCoursEnfant(enfantId);
@@ -101,12 +136,30 @@ public class JourneeEnfantServiceImpl implements JourneeEnfantService {
         // to do throw error impossible de cloturer journee car aucune journee en cours
     }
 
+    /**
+     *
+     * @param enfantId
+     * @return
+     */
     @Override
     public JourneeEnfant getJourneeEnCoursEnfant(Long enfantId){
         EnfantDto enfantDto = this.enfantService.getEnfant(enfantId);
         if (enfantDto != null && !enfantDto.getJournees().isEmpty() ){
             List<JourneeEnfant> journeesEnfant = enfantDto.getJournees();
             JourneeEnfant journeeEnfantEnCours = journeesEnfant.stream().filter(journee -> journee.isJourneeEnCours()).findFirst().get();
+
+            return journeeEnfantEnCours;
+        }
+        return null;
+        //to do throw error pas de journee en cours pour cet enfant
+    }
+
+    @Override
+    public JourneeEnfant getJourneeDuJourEnfant(Long enfantId){
+        EnfantDto enfantDto = this.enfantService.getEnfant(enfantId);
+        if (enfantDto != null && !enfantDto.getJournees().isEmpty() ){
+            List<JourneeEnfant> journeesEnfant = enfantDto.getJournees();
+            JourneeEnfant journeeEnfantEnCours = journeesEnfant.stream().filter(journee -> journee.getDate().equals(LocalDate.now())).findFirst().get();
 
             return journeeEnfantEnCours;
         }

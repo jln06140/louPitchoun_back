@@ -29,10 +29,17 @@ public class JourneeEnfantController {
         return this.journeeEnfantService.getJourneesByEnfant(id);
     }
 
-    @GetMapping("journeesEnCoursEnfant/{id}")
-    JourneeEnfant getJourneesEnCoursEnfant(@PathVariable(value = "id") Long id)
+    @GetMapping("journeeDuJourEnfant/{id}")
+    JourneeEnfant getJourneeDuJourEnfant(@PathVariable(value = "id") Long enfantId)
     {
-        JourneeEnfant journeeEnfantEnCours = this.getJourneesEnCoursEnfant(id);
+        JourneeEnfant journeeEnfant = this.journeeEnfantService.getJourneeDuJourEnfant(enfantId);
+        return journeeEnfant;
+    }
+
+    @GetMapping("journeesEnCoursEnfant/{id}")
+    JourneeEnfant getJourneeEnCoursEnfant(@PathVariable(value = "id") Long enfantId)
+    {
+        JourneeEnfant journeeEnfantEnCours = this.journeeEnfantService.getJourneeEnCoursEnfant(enfantId);
         if(journeeEnfantEnCours == null){
             return null;
             //to do throw error pas de journee en cours pour cet enfant

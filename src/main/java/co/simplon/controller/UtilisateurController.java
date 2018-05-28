@@ -93,7 +93,8 @@ public class UtilisateurController {
 															   @RequestParam("mdp") String motDePasse) throws Exception {
 		try {
 			Utilisateur utilisateurReturn = this.utilisateurService.getUtilisateurByUsernameAndMdp(username, motDePasse);
-			return ResponseEntity.ok().body(utilisateurReturn);
+			UtilisateurDto utilisateurReturnDto = this.utilisateurMapper.map(utilisateurReturn);
+			return ResponseEntity.ok().body(utilisateurReturnDto);
 		}catch(Exception e){
 			Map<String,String> resultMap = new HashMap<>();
 			resultMap.put("message","Utilisateur inexistant");

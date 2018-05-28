@@ -168,7 +168,7 @@ INSERT INTO `enfant` (`id`, `created_date`, `id_enfant_info`, `id_section`) VALU
 
 
 INSERT INTO `utilisateur` (`id`, `actif`, `created_date`, `mot_de_passe`, `updated_date`, `username`, `id_info`, `id_profil`, `id_section`) VALUES
-  (1, b'1', NULL, '$2a$10$1SNSZHgDBvoKlZZUnL.xW.PQaFaNS0C7K4fnDQB0P/fxDp8/4HknC', NULL, 'toto@aol.com', 1, 2, NULL),
+  (1, b'1', NULL, '$2a$10$dhkn/NKcittNphhCUDU8hOy.s8gBGEaGRQYNlQiX6xMNi6h1MHuYm', NULL, 'toto@aol.com', 1, 2, NULL),
   (2, b'1', NULL, '$2a$10$dhkn/NKcittNphhCUDU8hOy.s8gBGEaGRQYNlQiX6xMNi6h1MHuYm', 0xaced00057372000d6a6176612e74696d652e536572955d84ba1b2248b20c00007870770e05000007e205140907340fbc520078, 'ERY838', 2, 1, 1);
 COMMIT;
 

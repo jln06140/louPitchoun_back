@@ -25,4 +25,6 @@ public interface JourneeEnfantService {
     JourneeEnfant cloturerJournee(Long enfantId);
 
     JourneeEnfant getJourneeEnCoursEnfant(Long enfantId);
+
+    JourneeEnfant getJourneeDuJourEnfant(Long enfantId);
 }
