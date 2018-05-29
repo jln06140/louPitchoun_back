@@ -6,6 +6,7 @@ import java.util.Set;
 import co.simplon.controller.dto.EmployeDto;
 import co.simplon.exception.MotDePasseException;
 import co.simplon.model.Utilisateur;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 /**
  * 
@@ -16,8 +17,8 @@ import co.simplon.model.Utilisateur;
 
 public interface EmployeService {
 
-	Set<EmployeDto> getAllEmploye ();
-	EmployeDto addEmploye (EmployeDto employe) throws MotDePasseException;
+	List<EmployeDto> getAllEmploye ();
+	EmployeDto addEmploye (EmployeDto employe) throws Exception;
 	EmployeDto getEmploye (Long id);
 	EmployeDto updateEmploye (EmployeDto employe);
 	void deleteEmploye (EmployeDto employe);

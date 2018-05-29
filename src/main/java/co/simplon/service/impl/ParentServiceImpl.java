@@ -60,11 +60,31 @@ public class ParentServiceImpl implements ParentService{
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public Set<ParentDto> getAllParents() {
+	public List<ParentDto> getAllParents() {
 		logger.info("recuperation du profil");
 		Profil profil = this.profilService.getProfilByLibelle(ProfilEnum.PARENT);
 
 		return this.utilisateurMapper.mapListUtilisateurToParentDto(this.parentDao.findByProfil(profil));
+	}
+
+	/**
+	 *
+	 * @param enfantId
+	 * @return
+	 */
+	@Override
+	public List<ParentDto> getParentsEnfant(Long enfantId){
+		List<ParentDto> allParents = this.getAllParents();
+		List<ParentDto> parentsReturn = new ArrayList<>();
+		for(ParentDto parent : allParents){
+			for(EnfantDto enfant : parent.getEnfants()){
+				if(enfant.getId() == enfantId){
+					parentsReturn.add(parent);
+				}
+			}
+		}
+		return parentsReturn;
+
 	}
 
 	@Override

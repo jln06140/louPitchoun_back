@@ -11,7 +11,6 @@ import co.simplon.model.Section;
 import co.simplon.model.Utilisateur;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Generated;
@@ -264,31 +263,31 @@ public class UtilisateurMapperImpl implements UtilisateurMapper {
     }
 
     @Override
-    public Set<ParentDto> mapListUtilisateurToParentDto(Set<Utilisateur> utilisateurs) {
+    public List<ParentDto> mapListUtilisateurToParentDto(Set<Utilisateur> utilisateurs) {
         if ( utilisateurs == null ) {
             return null;
         }
 
-        Set<ParentDto> set = new HashSet<ParentDto>( Math.max( (int) ( utilisateurs.size() / .75f ) + 1, 16 ) );
+        List<ParentDto> list = new ArrayList<ParentDto>( utilisateurs.size() );
         for ( Utilisateur utilisateur : utilisateurs ) {
-            set.add( utilisateurToParentDto( utilisateur ) );
+            list.add( utilisateurToParentDto( utilisateur ) );
         }
 
-        return set;
+        return list;
     }
 
     @Override
-    public Set<EmployeDto> mapListUtilisateurToEmployDto(Set<Utilisateur> utilisateurs) {
+    public List<EmployeDto> mapListUtilisateurToEmployDto(Set<Utilisateur> utilisateurs) {
         if ( utilisateurs == null ) {
             return null;
         }
 
-        Set<EmployeDto> set = new HashSet<EmployeDto>( Math.max( (int) ( utilisateurs.size() / .75f ) + 1, 16 ) );
+        List<EmployeDto> list = new ArrayList<EmployeDto>( utilisateurs.size() );
         for ( Utilisateur utilisateur : utilisateurs ) {
-            set.add( mapEmploye( utilisateur ) );
+            list.add( mapEmploye( utilisateur ) );
         }
 
-        return set;
+        return list;
     }
 
     private ProfilEnum userProfilLibelle(Utilisateur utilisateur) {

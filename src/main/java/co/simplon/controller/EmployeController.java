@@ -1,13 +1,17 @@
 
 package co.simplon.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 
 import co.simplon.controller.dto.EmployeDto;
 import co.simplon.exception.MotDePasseException;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,7 +39,7 @@ public class EmployeController {
      */
 
     @GetMapping
-    Set<EmployeDto> getAllEmploye() {
+    List<EmployeDto> getAllEmploye() {
         return this.serviceEmploye.getAllEmploye();
     }
 
@@ -58,8 +62,17 @@ public class EmployeController {
      */
 
     @PostMapping
-    EmployeDto addEmploye(@Valid @RequestBody EmployeDto employe) throws MotDePasseException {
-        return this.serviceEmploye.addEmploye(employe);
+    ResponseEntity<Object> addEmploye(@Valid @RequestBody EmployeDto employe) {
+        EmployeDto employeReturn = new EmployeDto();
+        Map<String,String> resultMap = new HashMap<>();
+        try{
+            employeReturn = this.serviceEmploye.addEmploye(employe);
+            return ResponseEntity.ok().body(employeReturn);
+        } catch (Exception e) {
+            resultMap.put("erreur","Employe deja enregistré avec ce matricule");
+            return ResponseEntity.badRequest().body(resultMap);
+        }
+
     }
 
     /**
@@ -69,13 +82,18 @@ public class EmployeController {
      */
 
     @PutMapping("{id}")
-    ResponseEntity<EmployeDto> updateEmploye(@PathVariable(value = "id") Long id, @Valid @RequestBody EmployeDto employe) {
+    ResponseEntity<Object> updateEmploye(@PathVariable(value = "id") Long id, @Valid @RequestBody EmployeDto employe) {
         EmployeDto employeToUpdate = this.serviceEmploye.getEmploye(id);
         if (employeToUpdate == null)
             return ResponseEntity.notFound().build();
-
+    try {
         EmployeDto employeUpdated = this.serviceEmploye.updateEmploye(employe);
         return ResponseEntity.ok(employeUpdated);
+    }catch(Exception e){
+        Map<String,String> resultMap = new HashMap<String,String>();
+        resultMap.put("message","Matricule deja utilisé");
+        return ResponseEntity.badRequest().body(resultMap);
+    }
     }
 
     /**

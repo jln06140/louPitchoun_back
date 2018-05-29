@@ -12,6 +12,7 @@ import co.simplon.service.EmployeService;
 import co.simplon.service.ProfilService;
 import co.simplon.service.SectionService;
 import co.simplon.service.UtilisateurService;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -45,13 +47,13 @@ public class EmployeServiceImpl implements EmployeService {
     private UtilisateurService utilisateurService;
 
     @Override
-    public Set<EmployeDto> getAllEmploye() {
+    public List<EmployeDto> getAllEmploye() {
         Profil profil = this.profilService.getProfilByLibelle(ProfilEnum.EMPLOYE);
         return this.utilisateurMapper.mapListUtilisateurToEmployDto(this.daoEmploye.findByProfil(profil));
     }
 
     @Override
-    public EmployeDto addEmploye(EmployeDto employe) throws MotDePasseException {
+    public EmployeDto addEmploye(EmployeDto employe) throws Exception {
         logger.info("creation d'un utilisateur : employe");
         //mapping employe en utilisateur
         Utilisateur utilisateur = this.utilisateurMapper.mapEmploye(employe);

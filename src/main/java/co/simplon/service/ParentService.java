@@ -18,7 +18,10 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExceptio
  *	d'un parent
  */
 public interface ParentService {
-	Set<ParentDto> getAllParents();
+	List<ParentDto> getAllParents();
+
+	List<ParentDto> getParentsEnfant(Long enfantId);
+
 	ParentDto createUtilisateurParent(ParentDto parentDto) throws MotDePasseException, MySQLIntegrityConstraintViolationException;
 	ParentDto getParent( Long id);
 

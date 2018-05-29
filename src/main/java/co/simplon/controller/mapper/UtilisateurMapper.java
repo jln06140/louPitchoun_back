@@ -94,7 +94,7 @@ public interface UtilisateurMapper {
     @IterableMapping(qualifiedByName = "parentDtoSansEnfants")
     List<ParentDto> mapListUtilisateurToParentDtoSansEnfant(List<Utilisateur> utilisateurs);
 
-    Set<ParentDto> mapListUtilisateurToParentDto(Set<Utilisateur> utilisateurs);
+    List<ParentDto> mapListUtilisateurToParentDto(Set<Utilisateur> utilisateurs);
 
-    Set<EmployeDto> mapListUtilisateurToEmployDto(Set<Utilisateur> utilisateurs);
+    List<EmployeDto> mapListUtilisateurToEmployDto(Set<Utilisateur> utilisateurs);
 }

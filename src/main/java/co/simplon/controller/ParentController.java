@@ -11,6 +11,7 @@ import co.simplon.controller.dto.EnfantDto;
 import co.simplon.controller.dto.ParentDto;
 import co.simplon.dao.ParentDao;
 import co.simplon.exception.MotDePasseException;
+import co.simplon.service.EnfantService;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,9 @@ public class ParentController{
 	@Autowired
 	private ParentService parentService;
 
+	@Autowired
+	private EnfantService enfantService;
+
 
 	/*
 	 * @return
@@ -43,7 +47,7 @@ public class ParentController{
 	 */
 
 	@GetMapping
-    Set<ParentDto> getAllParent(){
+    List<ParentDto> getAllParent(){
 		return this.parentService.getAllParents();
 	}
 
@@ -62,6 +66,14 @@ public class ParentController{
 		return ResponseEntity.ok().body(parent);
 	}
 
+	@GetMapping("/parentsenfant/{id}")
+	ResponseEntity<EnfantDto> getParentsEnfant (@PathVariable(value="id") Long enfantId){
+		EnfantDto enfant = this.enfantService.getEnfant(enfantId);
+		if( enfant == null )
+			return ResponseEntity.notFound().build();
+		return ResponseEntity.ok().body(enfant);
+	}
+
 	/**
 	 * @param parent
 	 * @return
@@ -78,9 +90,9 @@ public class ParentController{
 			Map<String,String> resultMap = new HashMap<>();
 			resultMap.put("message","Mot de passe obligatoire");
 			return ResponseEntity.badRequest().body(resultMap);
-		}catch(MySQLIntegrityConstraintViolationException e){
+		}catch(Exception e){
 			Map<String,String> resultMap = new HashMap<String,String>();
-			resultMap.put("message","Email deja enregistré");
+			resultMap.put("message","Parent deja enregistré avec cet email");
 			return ResponseEntity.badRequest().body(resultMap);
 		}
 
@@ -102,13 +114,18 @@ public class ParentController{
 	 */
 
 	@PutMapping("/{id}")
-	ResponseEntity<ParentDto> updateParent(@PathVariable(value = "id") Long id,@Valid @RequestBody ParentDto parent){
+	ResponseEntity<Object> updateParent(@PathVariable(value = "id") Long id,@Valid @RequestBody ParentDto parent){
         ParentDto parentToUpdate = this.parentService.getParent(id);
 		if (parentToUpdate == null)
 			return ResponseEntity.notFound().build();
-
-        ParentDto parentUpdated = this.parentService.updateParent(parent);
-		return ResponseEntity.ok(parentUpdated);
+		try{
+			ParentDto parentUpdated = this.parentService.updateParent(parent);
+			return ResponseEntity.ok(parentUpdated);
+		}catch(Exception e){
+			Map<String,String> resultMap = new HashMap<String,String>();
+			resultMap.put("message","Email deja utilisé");
+			return ResponseEntity.badRequest().body(resultMap);
+		}
 	}
 
 	/**
